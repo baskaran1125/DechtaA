@@ -1,0 +1,142 @@
+[
+  {
+    "column_name": "id",
+    "data_type": "bigint"
+  },
+  {
+    "column_name": "uuid",
+    "data_type": "uuid"
+  },
+  {
+    "column_name": "vendor_id",
+    "data_type": "bigint"
+  },
+  {
+    "column_name": "catalog_item_id",
+    "data_type": "bigint"
+  },
+  {
+    "column_name": "product_name",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "category",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "description",
+    "data_type": "text"
+  },
+  {
+    "column_name": "image_url",
+    "data_type": "text"
+  },
+  {
+    "column_name": "stock",
+    "data_type": "integer"
+  },
+  {
+    "column_name": "mrp",
+    "data_type": "numeric"
+  },
+  {
+    "column_name": "selling_price",
+    "data_type": "numeric"
+  },
+  {
+    "column_name": "cost_price",
+    "data_type": "numeric"
+  },
+  {
+    "column_name": "gst_percent",
+    "data_type": "numeric"
+  },
+  {
+    "column_name": "discount_percent",
+    "data_type": "numeric"
+  },
+  {
+    "column_name": "is_bulk",
+    "data_type": "boolean"
+  },
+  {
+    "column_name": "bulk_discount",
+    "data_type": "numeric"
+  },
+  {
+    "column_name": "approval_status",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "rejection_reason",
+    "data_type": "text"
+  },
+  {
+    "column_name": "is_active",
+    "data_type": "boolean"
+  },
+  {
+    "column_name": "status_active",
+    "data_type": "boolean"
+  },
+  {
+    "column_name": "search_tags",
+    "data_type": "jsonb"
+  },
+  {
+    "column_name": "fts_vector",
+    "data_type": "tsvector"
+  },
+  {
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone"
+  },
+  {
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone"
+  },
+  {
+    "column_name": "name",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "detailed_description",
+    "data_type": "text"
+  },
+  {
+    "column_name": "stock_quantity",
+    "data_type": "integer"
+  },
+  {
+    "column_name": "unit",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "weight_kg",
+    "data_type": "numeric"
+  },
+  {
+    "column_name": "images",
+    "data_type": "jsonb"
+  },
+  {
+    "column_name": "brand",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "warranty",
+    "data_type": "text"
+  },
+  {
+    "column_name": "total_price",
+    "data_type": "numeric"
+  },
+  {
+    "column_name": "status",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "is_boosted",
+    "data_type": "boolean"
+  }
+]

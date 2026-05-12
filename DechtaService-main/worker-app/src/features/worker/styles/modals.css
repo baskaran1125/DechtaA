@@ -1,0 +1,143 @@
+/* ===== MODALS ===== */
+.w-modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(5, 15, 28, 0.80);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: wFadeIn 0.25s ease;
+}
+
+.w-modal-content {
+  background: linear-gradient(160deg, #0f2035 0%, #091624 100%);
+  padding: 30px;
+  border-radius: var(--radius-xl);
+  max-width: 600px;
+  width: 92%;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 197, 255, 0.20);
+  animation: wPopIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(0, 197, 255, 0.22);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.worker-dashboard.light-theme .w-modal-content {
+  background: linear-gradient(160deg, #f0f8ff 0%, #e8f4ff 100%);
+  border-color: rgba(0, 160, 220, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 160, 220, 0.25);
+}
+
+.w-modal-content h3 {
+  margin-bottom: 10px;
+  color: var(--text-main);
+  font-size: 20px;
+  font-weight: 700;
+}
+.w-modal-content p {
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ===== OTP ===== */
+.w-otp-input-group {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 25px 0;
+}
+.w-otp-digit {
+  width: 58px;
+  height: 68px;
+  background: rgba(0, 197, 255, 0.06);
+  border: 2px solid rgba(0, 197, 255, 0.25);
+  border-radius: 14px;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--logo-accent);
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.w-otp-digit:focus {
+  border-color: var(--logo-accent);
+  box-shadow: 0 0 0 3px rgba(0, 197, 255, 0.25);
+  background: rgba(0, 197, 255, 0.10);
+}
+
+/* ===== TOAST ===== */
+.worker-toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: linear-gradient(135deg, #0f2035, #091624);
+  border: 1px solid rgba(0, 197, 255, 0.35);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 99px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 197, 255, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 10000;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+.worker-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.worker-toast.error {
+  border-color: var(--danger);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(244, 63, 94, 0.25);
+}
+
+/* ===== FREEZE / ALERTS ===== */
+.w-freeze-alert {
+  padding: 12px 16px;
+  background: rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(244, 63, 94, 0.40);
+  border-radius: 14px;
+  color: #fda4af;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.w-suspension-alert {
+  background: rgba(249, 115, 22, 0.12);
+  border-color: rgba(249, 115, 22, 0.40);
+  color: #fdba74;
+}
+
+/* ===== COIN SHOWER ===== */
+.w-coin {
+  position: fixed;
+  top: -50px;
+  font-size: 24px;
+  animation: wFall linear forwards;
+  z-index: 2000;
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+}
+
+/* ===== RESPONSIVE MODALS ===== */
+@media (max-width: 480px) {
+  .w-modal-content { padding: 20px; border-radius: var(--radius-lg); }
+  .w-otp-digit { width: 44px; height: 54px; font-size: 24px; }
+  .w-otp-input-group { gap: 10px; }
+  .worker-toast { width: 88%; font-size: 13px; justify-content: center; }
+  .worker-toast.show { transform: translateX(-50%) translateY(-20px); bottom: 10px; }
+}

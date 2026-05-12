@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar { display: none; }
+
+/* Accessibility */
+.emoji-icon { speak: none; speak-as: normal; }
+
+/* ===== WORKER DASHBOARD THEME TOKENS ===== */
+.worker-dashboard {
+  /* Backgrounds */
+  --bg-dark: #0f2035;
+  --bg-darker: #0d1b2e;
+  --bg-card: rgba(15, 32, 53, 0.85);
+  --bg-card-hover: rgba(0, 197, 255, 0.06);
+
+  /* Card borders */
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(0, 197, 255, 0.18);
+  --card-border-hover: rgba(0, 197, 255, 0.45);
+
+  /* Accent — partner sky-blue */
+  --accent: #00c5ff;
+  --logo-accent: #00c5ff;
+  --accent-glow: rgba(0, 197, 255, 0.30);
+  --accent-hover: #0ea5e9;
+  --accent-deep: #0284c7;
+
+  /* Orange highlight (partner bonus/reward color) */
+  --highlight: #f97316;
+  --highlight-end: #fb923c;
+
+  /* Text */
+  --text-main: #f0f6ff;
+  --text-muted: #7ba7c4;
+
+  /* States */
+  --success: #22d3a5;
+  --danger: #f43f5e;
+  --warning: #f97316;
+
+  /* Chart colors */
+  --pie-color-1: #00c5ff;
+  --pie-color-2: #f43f5e;
+  --pie-color-3: #f97316;
+  --pie-color-4: #a78bfa;
+
+  /* Radius */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Shadows */
+  --shadow-glow: 0 0 20px var(--accent-glow);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.35);
+
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  color: var(--text-main);
+}
+
+/* Light theme overrides */
+.worker-dashboard.light-theme {
+  --bg-dark: #e8f4ff;
+  --bg-darker: #f0f8ff;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(0, 160, 220, 0.25);
+  --accent: #0284c7;
+  --logo-accent: #0284c7;
+  --accent-glow: rgba(2, 132, 199, 0.2);
+  --accent-hover: #0369a1;
+  --text-main: #0c1e32;
+  --text-muted: #456380;
+}
+
+/* ===== KEYFRAME ANIMATIONS ===== */
+@keyframes wFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes wSlideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes wSlideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes wPulseGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 197, 255, 0.45); }
+  70%  { box-shadow: 0 0 0 8px rgba(0, 197, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 197, 255, 0); }
+}
+@keyframes wFloat {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+@keyframes wPopIn {
+  from { transform: scale(0.85) translateY(-20px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+@keyframes wShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80%      { transform: translateX(4px); }
+}
+@keyframes wFall {
+  to { transform: translateY(110vh) rotate(360deg); }
+}
+@keyframes wTruckDrive {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(110vw); }
+}
+@keyframes wWheelSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes wRoadScroll {
+  from { background-position: 0 0; }
+  to   { background-position: -200px 0; }
+}
+@keyframes wGradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes wPingBadge {
+  0%   { transform: scale(1); opacity: 1; }
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+@keyframes wBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ===== GLASS UTILITY ===== */
+.worker-dashboard .w-glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.worker-dashboard .w-glass:hover {
+  border-color: var(--card-border-hover);
+  box-shadow: 0 0 0 1px var(--accent-glow), var(--shadow-card);
+}
+.worker-dashboard.light-theme .w-glass {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}

@@ -1,0 +1,140 @@
+﻿../backend/shared/routes.ts(1,19): error TS2792: Cannot find module 'zod'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+../backend/shared/schema.ts(1,77): error TS2792: Cannot find module 'drizzle-orm/pg-core'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+../backend/shared/schema.ts(2,36): error TS2792: Cannot find module 'drizzle-zod'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+../backend/shared/schema.ts(3,19): error TS2792: Cannot find module 'zod'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/App.tsx(2,37): error TS2792: Cannot find module '@tanstack/react-query'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/Navbar.tsx(1,35): error TS2792: Cannot find module 'wouter'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/Navbar.tsx(2,76): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/Navbar.tsx(58,21): error TS2322: Type '{ children: Element; variant: string; size: string; onClick: () => Promise<void>; title: string; className: string; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'variant' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/components/ui/accordion.tsx(2,37): error TS2792: Cannot find module '@radix-ui/react-accordion'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/accordion.tsx(3,29): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/alert-dialog.tsx(2,39): error TS2792: Cannot find module '@radix-ui/react-alert-dialog'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/alert.tsx(2,40): error TS2792: Cannot find module 'class-variance-authority'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/aspect-ratio.tsx(1,39): error TS2792: Cannot find module '@radix-ui/react-aspect-ratio'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/avatar.tsx(4,34): error TS2792: Cannot find module '@radix-ui/react-avatar'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/badge.tsx(2,40): error TS2792: Cannot find module 'class-variance-authority'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/badge.tsx(32,29): error TS2339: Property 'variant' does not exist on type 'BadgeProps'.
+src/components/ui/breadcrumb.tsx(2,22): error TS2792: Cannot find module '@radix-ui/react-slot'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/breadcrumb.tsx(3,46): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/button.tsx(2,22): error TS2792: Cannot find module '@radix-ui/react-slot'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/button.tsx(3,40): error TS2792: Cannot find module 'class-variance-authority'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/button.tsx(49,17): error TS2339: Property 'variant' does not exist on type 'ButtonProps'.
+src/components/ui/button.tsx(49,26): error TS2339: Property 'size' does not exist on type 'ButtonProps'.
+src/components/ui/calendar.tsx(2,43): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/calendar.tsx(3,27): error TS2792: Cannot find module 'react-day-picker'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/calendar.tsx(55,22): error TS7031: Binding element 'className' implicitly has an 'any' type.
+src/components/ui/calendar.tsx(58,23): error TS7031: Binding element 'className' implicitly has an 'any' type.
+src/components/ui/carousel.tsx(4,8): error TS2792: Cannot find module 'embla-carousel-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/carousel.tsx(5,39): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/carousel.tsx(61,9): error TS2698: Spread types may only be created from object types.
+src/components/ui/carousel.tsx(128,35): error TS2339: Property 'axis' does not exist on type '{}'.
+src/components/ui/carousel.tsx(198,17): error TS2339: Property 'variant' does not exist on type 'Omit<ButtonProps & RefAttributes<HTMLButtonElement>, "ref">'.
+src/components/ui/carousel.tsx(198,38): error TS2339: Property 'size' does not exist on type 'Omit<ButtonProps & RefAttributes<HTMLButtonElement>, "ref">'.
+src/components/ui/carousel.tsx(204,7): error TS2322: Type '{ children: Element[]; form?: string | undefined; slot?: string | undefined; style?: CSSProperties | undefined; title?: string | undefined; key?: Key | null | undefined; ... 272 more ...; className: any; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'variant' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/components/ui/carousel.tsx(227,17): error TS2339: Property 'variant' does not exist on type 'Omit<ButtonProps & RefAttributes<HTMLButtonElement>, "ref">'.
+src/components/ui/carousel.tsx(227,38): error TS2339: Property 'size' does not exist on type 'Omit<ButtonProps & RefAttributes<HTMLButtonElement>, "ref">'.
+src/components/ui/carousel.tsx(233,7): error TS2322: Type '{ children: Element[]; form?: string | undefined; slot?: string | undefined; style?: CSSProperties | undefined; title?: string | undefined; key?: Key | null | undefined; ... 272 more ...; className: any; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'variant' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/components/ui/chart.tsx(4,36): error TS2792: Cannot find module 'recharts'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/chart.tsx(188,25): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/components/ui/chart.tsx(188,31): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/components/ui/chart.tsx(288,23): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/components/ui/checkbox.tsx(2,36): error TS2792: Cannot find module '@radix-ui/react-checkbox'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/checkbox.tsx(3,23): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/collapsible.tsx(3,39): error TS2792: Cannot find module '@radix-ui/react-collapsible'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/command.tsx(2,34): error TS2792: Cannot find module '@radix-ui/react-dialog'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/command.tsx(3,45): error TS2792: Cannot find module 'cmdk'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/command.tsx(4,24): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/context-menu.tsx(2,39): error TS2792: Cannot find module '@radix-ui/react-context-menu'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/context-menu.tsx(3,45): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/dialog.tsx(4,34): error TS2792: Cannot find module '@radix-ui/react-dialog'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/dialog.tsx(5,19): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/drawer.tsx(4,43): error TS2792: Cannot find module 'vaul'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/dropdown-menu.tsx(2,40): error TS2792: Cannot find module '@radix-ui/react-dropdown-menu'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/dropdown-menu.tsx(3,45): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/form.tsx(4,33): error TS2792: Cannot find module '@radix-ui/react-label'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/form.tsx(5,22): error TS2792: Cannot find module '@radix-ui/react-slot'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/form.tsx(13,8): error TS2792: Cannot find module 'react-hook-form'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/hover-card.tsx(4,37): error TS2792: Cannot find module '@radix-ui/react-hover-card'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/input-otp.tsx(2,10): error TS2303: Circular definition of import alias 'OTPInput'.
+src/components/ui/input-otp.tsx(2,10): error TS2459: Module '"input-otp"' declares 'OTPInput' locally, but it is not exported.
+src/components/ui/input-otp.tsx(2,20): error TS2303: Circular definition of import alias 'OTPInputContext'.
+src/components/ui/input-otp.tsx(2,20): error TS2459: Module '"input-otp"' declares 'OTPInputContext' locally, but it is not exported.
+src/components/ui/input-otp.tsx(3,21): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/input-otp.tsx(36,44): error TS18046: 'inputOTPContext' is of type 'unknown'.
+src/components/ui/label.tsx(2,33): error TS2792: Cannot find module '@radix-ui/react-label'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/label.tsx(3,40): error TS2792: Cannot find module 'class-variance-authority'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/menubar.tsx(4,35): error TS2792: Cannot find module '@radix-ui/react-menubar'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/menubar.tsx(5,45): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/navigation-menu.tsx(2,42): error TS2792: Cannot find module '@radix-ui/react-navigation-menu'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/navigation-menu.tsx(3,21): error TS2792: Cannot find module 'class-variance-authority'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/navigation-menu.tsx(4,29): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/pagination.tsx(2,59): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/pagination.tsx(39,23): error TS2344: Type '"size"' does not satisfy the constraint 'keyof ButtonProps'.
+src/components/ui/pagination.tsx(68,5): error TS2783: 'size' is specified more than once, so this usage will be overwritten.
+src/components/ui/pagination.tsx(84,5): error TS2783: 'size' is specified more than once, so this usage will be overwritten.
+src/components/ui/popover.tsx(2,35): error TS2792: Cannot find module '@radix-ui/react-popover'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/progress.tsx(4,36): error TS2792: Cannot find module '@radix-ui/react-progress'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/radio-group.tsx(2,38): error TS2792: Cannot find module '@radix-ui/react-radio-group'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/radio-group.tsx(3,24): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/resizable.tsx(3,30): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/resizable.tsx(4,37): error TS2792: Cannot find module 'react-resizable-panels'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/scroll-area.tsx(2,38): error TS2792: Cannot find module '@radix-ui/react-scroll-area'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/select.tsx(4,34): error TS2792: Cannot find module '@radix-ui/react-select'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/select.tsx(5,47): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/separator.tsx(2,37): error TS2792: Cannot find module '@radix-ui/react-separator'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/sheet.tsx(4,33): error TS2792: Cannot find module '@radix-ui/react-dialog'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/sheet.tsx(5,40): error TS2792: Cannot find module 'class-variance-authority'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/sheet.tsx(6,19): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/sidebar.tsx(4,22): error TS2792: Cannot find module '@radix-ui/react-slot'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/sidebar.tsx(5,35): error TS2792: Cannot find module 'class-variance-authority'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/sidebar.tsx(6,31): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/sidebar.tsx(267,7): error TS2322: Type '{ children: Element[]; asChild?: boolean | undefined; disabled?: boolean | undefined; form?: string | undefined; formAction?: string | undefined; formEncType?: string | undefined; ... 274 more ...; onClick: (event: MouseEvent<...>) => void; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'variant' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/components/ui/slider.tsx(2,34): error TS2792: Cannot find module '@radix-ui/react-slider'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/switch.tsx(2,35): error TS2792: Cannot find module '@radix-ui/react-switch'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/tabs.tsx(2,32): error TS2792: Cannot find module '@radix-ui/react-tabs'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/toast.tsx(2,34): error TS2792: Cannot find module '@radix-ui/react-toast'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/toast.tsx(3,40): error TS2792: Cannot find module 'class-variance-authority'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/toast.tsx(4,19): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/toggle-group.tsx(4,39): error TS2792: Cannot find module '@radix-ui/react-toggle-group'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/toggle-group.tsx(5,35): error TS2792: Cannot find module 'class-variance-authority'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/toggle.tsx(2,34): error TS2792: Cannot find module '@radix-ui/react-toggle'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/toggle.tsx(3,40): error TS2792: Cannot find module 'class-variance-authority'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/components/ui/tooltip.tsx(4,35): error TS2792: Cannot find module '@radix-ui/react-tooltip'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/auth/AuthPage.tsx(2,29): error TS2792: Cannot find module 'wouter'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/auth/AuthPage.tsx(4,56): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/auth/AuthPage.tsx(5,22): error TS2792: Cannot find module 'wouter'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/auth/useAuth.ts(1,55): error TS2792: Cannot find module '@tanstack/react-query'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/auth/useAuth.ts(4,19): error TS2792: Cannot find module 'zod'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/auth/useAuth.ts(30,21): error TS7006: Parameter 'user' implicitly has an 'any' type.
+src/features/auth/useAuth.ts(39,21): error TS7006: Parameter 'user' implicitly has an 'any' type.
+src/features/orders/OrdersPage.tsx(1,29): error TS2792: Cannot find module 'wouter'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/orders/OrdersPage.tsx(5,68): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/orders/OrdersPage.tsx(58,39): error TS7006: Parameter 'order' implicitly has an 'any' type.
+src/features/orders/useOrders.ts(1,55): error TS2792: Cannot find module '@tanstack/react-query'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/orders/useOrders.ts(4,19): error TS2792: Cannot find module 'zod'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/products/Marketplace.tsx(2,29): error TS2792: Cannot find module 'wouter'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/products/Marketplace.tsx(6,57): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/products/Marketplace.tsx(7,24): error TS2792: Cannot find module 'framer-motion'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/products/Marketplace.tsx(71,41): error TS7006: Parameter 'product' implicitly has an 'any' type.
+src/features/products/Marketplace.tsx(71,50): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/features/products/useProducts.ts(1,55): error TS2792: Cannot find module '@tanstack/react-query'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/products/useProducts.ts(4,19): error TS2792: Cannot find module 'zod'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/vendor/VendorDashboard.tsx(2,29): error TS2792: Cannot find module 'wouter'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/vendor/VendorDashboard.tsx(6,57): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/vendor/VendorDashboard.tsx(7,41): error TS2792: Cannot find module 'framer-motion'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/worker/sections/JobsSection.tsx(2,188): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/worker/sections/OverviewSection.tsx(1,87): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/worker/sections/ProfileSection.tsx(2,130): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/worker/WorkerAuthScreen.tsx(2,33): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/features/worker/WorkerLayout.tsx(25,8): error TS2792: Cannot find module 'lucide-react'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/hooks/use-toast.ts(158,22): error TS7006: Parameter 'open' implicitly has an 'any' type.
+src/lib/queryClient.ts(1,44): error TS2792: Cannot find module '@tanstack/react-query'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/lib/queryClient.ts(31,12): error TS7031: Binding element 'queryKey' implicitly has an 'any' type.
+src/lib/utils.ts(1,39): error TS2792: Cannot find module 'clsx'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+src/lib/utils.ts(2,25): error TS2792: Cannot find module 'tailwind-merge'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+tsconfig.json(16,5): error TS5023: Unknown compiler option 'allowImportingTsExtensions'.
+tsconfig.json(17,25): error TS6046: Argument for '--moduleResolution' option must be: 'node', 'classic', 'node16', 'nodenext'.

@@ -1,0 +1,167 @@
+/* ===== PROFILE ===== */
+.w-profile-input-group { margin-bottom: 22px; }
+.w-profile-label {
+  display: block;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.w-role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  min-height: 80px;
+}
+.w-role-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(0, 197, 255, 0.04);
+  border: 1px solid var(--card-border);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-main);
+}
+.w-role-check:hover { border-color: var(--accent); background: rgba(0, 197, 255, 0.08); }
+.w-role-check.checked {
+  border-color: var(--success);
+  background: rgba(34, 211, 165, 0.10);
+  box-shadow: 0 0 12px rgba(34, 211, 165, 0.18);
+}
+.w-role-check.disabled { opacity: 0.4; cursor: not-allowed; }
+
+.w-referral-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(0, 197, 255, 0.10), rgba(14, 165, 233, 0.06));
+  border: 1px solid rgba(0, 197, 255, 0.35);
+  padding: 14px 16px;
+  border-radius: 16px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+.w-referral-code {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--logo-accent);
+}
+
+/* Bank status badges */
+.w-bank-status {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.w-bank-status.pending {
+  background: rgba(249, 115, 22, 0.15);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, 0.40);
+}
+.w-bank-status.verified {
+  background: rgba(34, 211, 165, 0.15);
+  color: var(--success);
+  border: 1px solid rgba(34, 211, 165, 0.40);
+}
+.w-bank-status.missing {
+  background: rgba(244, 63, 94, 0.15);
+  color: var(--danger);
+  border: 1px solid rgba(244, 63, 94, 0.40);
+}
+
+/* ===== SETTINGS ===== */
+.w-setting-group {
+  margin-bottom: 24px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: rgba(0, 197, 255, 0.04);
+  border: 1px solid var(--card-border);
+}
+.worker-dashboard.light-theme .w-setting-group {
+  background: rgba(0, 130, 200, 0.05);
+}
+.w-setting-group h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.w-setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 197, 255, 0.07);
+}
+.w-setting-item:last-child { border-bottom: none; }
+
+.w-lang-toggle-group {
+  display: flex;
+  background: rgba(0, 197, 255, 0.06);
+  border: 1px solid rgba(0, 197, 255, 0.20);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.w-lang-toggle-btn {
+  padding: 7px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.w-lang-toggle-btn.active {
+  background: linear-gradient(135deg, #00c5ff, #0ea5e9);
+  color: #061520;
+  font-weight: 700;
+}
+
+/* ===== FILE UPLOAD ===== */
+.w-file-upload-box {
+  border: 2px dashed var(--card-border);
+  padding: 20px;
+  text-align: center;
+  border-radius: 14px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.w-file-upload-box:hover {
+  border-color: var(--logo-accent);
+  background: rgba(0, 197, 255, 0.05);
+}
+
+/* ===== RESPONSIVE SECTIONS ===== */
+@media (max-width: 768px) {
+  .w-role-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .w-referral-box { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .w-setting-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .w-lang-toggle-group { width: 100%; display: flex; }
+  .w-lang-toggle-btn { flex: 1; text-align: center; }
+}
+@media (max-width: 480px) {
+  .w-role-grid { grid-template-columns: 1fr; }
+}

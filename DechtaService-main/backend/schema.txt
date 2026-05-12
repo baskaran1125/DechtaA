@@ -1,0 +1,11 @@
+
+--- driver_stats ---
+id, driver_id, total_earnings, weekly_earnings, total_orders_completed, weekly_orders_completed, total_distance_km, rating, driver_name, avatar_url, created_at, updated_at
+--- driver_vehicles ---
+id, driver_id, vehicle_type, model_id, model_name, weight_capacity, dimensions, body_type, registration_number, is_active, created_at, updated_at
+--- driver_bank_accounts ---
+id, driver_id, account_holder_name, account_number, ifsc_code, is_verified, created_at, updated_at
+--- driver_documentss ---
+id, driver_id, aadhar_url, pan_url, license_url, rc_url, verification_status, created_at, updated_at
+--- driver_wallets ---
+id, driver_id, balance, outstanding_dues, last_updated, created_at

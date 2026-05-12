@@ -1,0 +1,350 @@
+﻿app/(tabs)/profile.tsx(1490,45): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1491,38): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1491,51): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1492,45): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1492,56): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1492,69): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1493,37): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1493,50): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1494,42): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1494,57): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1494,70): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1495,23): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1496,43): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1497,37): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1497,60): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1497,69): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1498,49): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1498,78): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1498,97): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1498,114): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1498,130): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1498,155): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1498,161): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1499,42): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1499,53): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1499,66): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1500,32): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1500,45): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1501,58): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1501,79): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1501,96): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1501,101): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1502,43): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1502,59): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1502,69): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1503,62): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1503,83): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1503,100): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1503,105): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1504,47): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1504,63): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1504,73): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1505,52): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1505,70): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1505,88): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1505,94): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1506,35): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1506,72): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1506,82): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1507,41): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1507,55): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1507,79): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1507,98): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1507,103): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1508,38): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1508,77): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1508,82): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1509,38): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1509,58): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1509,68): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1510,48): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1510,73): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1510,86): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1510,92): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1511,43): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1511,58): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1511,83): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1511,102): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1511,117): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1512,46): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1512,75): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1512,97): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1512,123): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1512,141): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1512,147): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1513,35): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1513,53): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1513,72): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1513,94): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1513,117): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1513,123): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1514,38): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1514,51): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1515,43): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1515,58): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1515,71): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1516,53): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1516,71): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1516,88): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1516,112): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1516,129): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1516,135): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1517,35): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1517,53): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1517,74): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1517,101): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1517,123): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1517,135): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1518,43): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1518,58): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1518,71): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1519,43): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1519,57): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1519,83): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1519,99): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1520,39): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1520,57): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1520,63): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1521,33): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1521,49): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1521,74): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1521,87): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1521,93): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1522,42): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1522,57): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1522,82): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1522,87): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1523,42): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1523,56): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1523,69): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1524,46): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1524,71): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1524,84): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1524,90): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1525,37): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1525,54): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1525,74): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1525,98): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1525,103): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1526,46): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1526,61): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1526,74): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1527,49): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1527,67): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1527,84): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1527,100): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1527,125): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1527,131): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1528,39): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1528,54): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1528,79): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1528,84): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1529,38): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1529,55): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1529,61): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1530,41): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1530,63): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1530,75): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1530,91): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1530,117): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1530,129): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1531,42): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1531,56): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1531,82): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1531,87): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1532,52): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1532,70): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1532,89): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1532,111): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1532,123): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1533,32): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1533,45): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1534,25): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1535,51): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1535,80): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1535,99): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1535,116): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1535,132): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1535,157): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1535,163): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1536,41): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1536,56): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1536,82): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1536,98): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1537,24): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1538,50): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1538,79): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1538,98): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1538,115): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1538,131): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1538,156): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1538,162): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1539,42): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1539,57): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1539,70): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1540,53): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1540,71): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1540,88): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1540,104): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1540,117): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1541,44): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1541,59): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1541,84): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1541,89): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1542,42): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1542,56): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1542,69): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1543,49): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1543,67): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1543,84): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1543,100): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1543,125): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1543,141): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1543,158): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1543,168): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1544,32): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1544,54): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1544,78): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1544,84): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1545,46): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1545,63): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1545,81): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1545,100): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1545,123): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1545,145): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1545,160): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1545,165): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1546,40): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1546,56): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1546,65): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1547,28): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1547,38): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1548,45): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1548,70): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1548,87): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1548,103): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1548,116): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1549,42): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1549,57): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1549,70): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1552,48): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1552,63): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1552,83): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1552,113): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1552,134): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1552,151): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1552,168): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1552,186): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1552,199): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1553,44): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1553,58): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1553,71): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1554,35): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1554,53): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1554,74): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1554,101): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1554,123): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1554,146): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1554,152): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1555,46): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1555,73): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1555,96): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1555,118): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1555,134): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1555,140): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1556,35): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1556,53): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1556,74): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1556,101): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1556,123): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1556,135): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1557,43): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1557,57): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1557,83): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1557,111): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1557,130): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1557,135): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1558,43): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1558,57): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1558,70): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1561,53): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1561,59): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1562,50): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1562,60): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1562,70): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1562,82): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1562,100): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1562,121): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1562,148): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1562,170): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1562,193): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1562,209): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1562,219): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1563,54): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1563,69): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1563,83): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1563,103): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1563,133): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1563,154): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1563,171): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1563,185): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1563,201): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1564,50): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1564,64): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1564,77): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1565,45): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1565,59): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1565,85): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1565,113): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1565,132): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1565,146): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1565,151): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1566,48): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1566,72): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1566,90): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1566,115): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1566,138): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1566,152): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1566,168): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1566,182): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1566,207): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1566,212): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1567,48): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1567,61): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1567,78): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1567,84): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1568,52): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1568,70): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1568,87): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1568,103): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1568,131): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1568,144): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1569,60): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1569,73): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1570,43): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1570,57): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1570,70): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1571,46): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1571,72): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1571,87): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1571,107): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1571,135): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1571,153): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1571,168): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1571,185): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1571,211): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1571,231): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1571,245): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1571,250): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1572,41): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1572,57): error TS1005: ';' expected.
+app/(tabs)/profile.tsx(1572,66): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1573,1): error TS1128: Declaration or statement expected.
+app/(tabs)/profile.tsx(1573,2): error TS1128: Declaration or statement expected.
+app/register.tsx(594,16): error TS1005: '}' expected.
+app/register.tsx(594,17): error TS1005: '...' expected.
+app/register.tsx(594,52): error TS1003: Identifier expected.
+app/register.tsx(595,13): error TS1005: ')' expected.
+app/register.tsx(618,12): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+app/register.tsx(619,10): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?

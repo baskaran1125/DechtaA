@@ -1,0 +1,8 @@
+/* Barrel CSS — imports all worker dashboard style modules */
+@import './styles/base.css';
+@import './styles/auth.css';
+@import './styles/layout.css';
+@import './styles/cards.css';
+@import './styles/charts.css';
+@import './styles/modals.css';
+@import './styles/sections.css';

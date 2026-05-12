@@ -1,0 +1,5 @@
+
+--- delivery_trips ---
+id, order_id, driver_id, status, pickup_otp, payout_amount, distance_text, started_at, completed_at, created_at, updated_at
+--- orders ---
+id, vendor_id, driver_id, product_name, quantity, total_amount, customer_name, customer_phone, order_date, status, order_type, vehicle_type, pickup_address, pickup_latitude, pickup_longitude, delivery_address, delivery_latitude, delivery_longitude, vendor_shop_name, delivery_fee, delivery_otp, model_id_requested, model_name_requested, weight_capacity_requested, body_type_requested, items, driver_name, driver_number, created_at, updated_at

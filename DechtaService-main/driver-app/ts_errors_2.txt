@@ -1,0 +1,40 @@
+﻿app/(tabs)/earnings.tsx(307,9): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'null | undefined'.
+  Type 'string' is not assignable to type 'null | undefined'.
+app/(tabs)/orders.tsx(1075,12): error TS2741: Property 'tripId' is missing in type '{ isOpen: boolean; onClose: () => void; onCallCustomer: () => void; }' but required in type 'ChatModalProps'.
+app/(tabs)/profile.tsx(1279,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+app/(tabs)/profile.tsx(1489,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1490,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1491,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1492,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1493,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1494,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1495,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1496,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1498,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1499,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1504,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1505,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1506,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1507,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1508,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1515,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1516,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1517,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1518,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1551,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1552,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1553,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1554,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1555,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1556,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1557,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1564,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1565,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1566,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1567,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1568,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1569,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1570,3): error TS1117: An object literal cannot have multiple properties with the same name.
+app/(tabs)/profile.tsx(1571,3): error TS1117: An object literal cannot have multiple properties with the same name.
+components/WalletView.tsx(508,22): error TS2322: Type '"equal"' is not assignable to type '"code" | "link" | "map" | "menu" | "search" | "table" | "video" | "file" | "type" | "repeat" | "anchor" | "bold" | "filter" | "key" | "layout" | "circle" | "image" | "twitter" | "camera" | ... 268 more ... | undefined'.

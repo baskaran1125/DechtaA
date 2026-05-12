@@ -1,0 +1,22 @@
+app/(tabs)/earnings.tsx(299,9): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'null | undefined'.
+  Type 'string' is not assignable to type 'null | undefined'.
+app/(tabs)/index.tsx(197,18): error TS7006: Parameter 'order' implicitly has an 'any' type.
+app/(tabs)/index.tsx(203,21): error TS7006: Parameter 'data' implicitly has an 'any' type.
+app/(tabs)/index.tsx(206,22): error TS7006: Parameter 'notification' implicitly has an 'any' type.
+app/(tabs)/profile.tsx(439,28): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ pending: { bg: string; text: string; icon: string; }; verified: { bg: string; text: string; icon: string; }; rejected: { bg: string; text: string; icon: string; }; incomplete: { bg: string; text: string; icon: string; }; }'.
+  No index signature with a parameter of type 'string' was found on type '{ pending: { bg: string; text: string; icon: string; }; verified: { bg: string; text: string; icon: string; }; rejected: { bg: string; text: string; icon: string; }; incomplete: { bg: string; text: string; icon: string; }; }'.
+app/(tabs)/profile.tsx(446,22): error TS2339: Property 'docCardContainer' does not exist on type '{ container: { flex: number; backgroundColor: string; }; scrollPad: { padding: number; paddingBottom: number; }; rowCenter: { flexDirection: "row"; alignItems: "center"; }; rowBetween: { flexDirection: "row"; alignItems: "center"; justifyContent: "space-between"; }; ... 149 more ...; sosLinkText: { ...; }; }'.
+app/(tabs)/profile.tsx(481,32): error TS2339: Property 'docIntroMsg' does not exist on type '{ container: { flex: number; backgroundColor: string; }; scrollPad: { padding: number; paddingBottom: number; }; rowCenter: { flexDirection: "row"; alignItems: "center"; }; rowBetween: { flexDirection: "row"; alignItems: "center"; justifyContent: "space-between"; }; ... 149 more ...; sosLinkText: { ...; }; }'.
+app/(tabs)/profile.tsx(861,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+app/(tabs)/profile.tsx(875,23): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+app/(tabs)/profile.tsx(879,17): error TS2464: A computed property name must be of type 'string', 'number', 'symbol', or 'any'.
+app/(tabs)/profile.tsx(880,37): error TS2538: Type 'null' cannot be used as an index type.
+app/(tabs)/profile.tsx(887,23): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+app/(tabs)/profile.tsx(891,17): error TS2464: A computed property name must be of type 'string', 'number', 'symbol', or 'any'.
+app/(tabs)/profile.tsx(892,37): error TS2538: Type 'null' cannot be used as an index type.
+app/register.tsx(491,13): error TS2322: Type 'undefined' is not assignable to type 'string'.
+app/register.tsx(492,15): error TS2339: Property 'aadhar' does not exist on type '{ aadharFile: string; panFile: string; licenseFile: string; rcFile: string; }'.
+app/register.tsx(492,15): error TS2339: Property 'license' does not exist on type '{ aadharFile: string; panFile: string; licenseFile: string; rcFile: string; }'.
+app/register.tsx(492,15): error TS2339: Property 'pan' does not exist on type '{ aadharFile: string; panFile: string; licenseFile: string; rcFile: string; }'.
+app/register.tsx(492,15): error TS2339: Property 'rc' does not exist on type '{ aadharFile: string; panFile: string; licenseFile: string; rcFile: string; }'.

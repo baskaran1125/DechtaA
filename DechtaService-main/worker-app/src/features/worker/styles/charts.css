@@ -1,0 +1,67 @@
+/* ===== CHART CONTAINER ===== */
+.w-chart-container {
+  display: flex; align-items: stretch; padding: 40px 10px 20px 10px;
+  height: 100%; position: relative; width: 100%;
+}
+.w-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; z-index: 1; height: 100%; }
+.w-bar {
+  width: 32px; background: linear-gradient(to top, var(--logo-accent), #4ade80);
+  border-radius: 6px 6px 0 0; transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-height: 4px;
+}
+.w-bar:hover { filter: brightness(1.2); }
+.w-bar-lbl { font-size: 10px; color: var(--text-muted); margin-top: 10px; }
+.w-bar-val { font-size: 11px; font-weight: 600; color: var(--text-main); margin-bottom: 5px; }
+
+@media (max-width: 480px) {
+  .w-bar { width: 16px; }
+  .w-bar-val { font-size: 9px; }
+  .w-bar-lbl { font-size: 9px; }
+}
+
+/* ===== LINE CHART ===== */
+.w-line-chart-container {
+  flex: 1; min-height: 250px; width: 100%;
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+.w-line-chart-svg { width: 100%; height: 100%; overflow: visible; }
+.w-line-chart-svg .line-path { stroke: var(--success); stroke-width: 3; fill: none; }
+.w-line-chart-svg .data-point { fill: var(--success); stroke: var(--card-bg); stroke-width: 2; cursor: pointer; }
+.w-line-chart-svg .grid-line { stroke: var(--card-border); stroke-width: 1; }
+.w-line-chart-svg .axis-label { font-size: 10px; fill: var(--text-muted); }
+
+/* ===== PIE CHART ===== */
+.w-pie-chart-container {
+  flex: 1; min-height: 250px; width: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.w-pie-chart-svg { width: 200px; height: 200px; }
+.w-pie-segment { cursor: pointer; transition: opacity 0.3s, transform 0.3s; }
+.w-pie-segment:hover { opacity: 0.8; }
+.w-pie-legend { list-style: none; padding: 0; margin-top: 20px; display: flex; flex-wrap: wrap; gap: 12px 20px; font-size: 13px; }
+.w-legend-item { display: flex; align-items: center; }
+.w-legend-color { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; }
+.w-legend-pct { color: var(--text-muted); margin-left: 5px; font-weight: 600; }
+
+/* ===== ANALYTICS ===== */
+.w-analytics-chip {
+  padding: 4px 12px; border-radius: 99px; font-size: 12px; cursor: pointer;
+  background: rgba(26, 26, 26, 0.5); border: 1px solid transparent;
+  color: var(--text-muted); transition: all 0.2s; font-family: inherit;
+}
+.w-analytics-chip:hover { background: rgba(255,255,255,0.1); }
+.w-analytics-chip.active { background: var(--logo-accent); color: var(--bg-darker); font-weight: 600; }
+
+/* ===== FLIP CHART ===== */
+.w-flip-container { position: relative; perspective: 1000px; cursor: pointer; min-height: 350px; }
+.w-flip-inner {
+  position: relative; width: 100%; height: 350px; text-align: center;
+  transform-style: preserve-3d; transition: transform 0.8s ease;
+}
+.w-flip-inner.flipped { transform: rotateY(180deg); }
+.w-flip-front, .w-flip-back {
+  position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; border-radius: var(--radius-lg); overflow: hidden; top: 0; left: 0;
+  background: var(--card-bg); border: 1px solid var(--card-border);
+}
+.w-flip-back { transform: rotateY(180deg); }

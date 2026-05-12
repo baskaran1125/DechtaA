@@ -1,0 +1,37 @@
+﻿Vendor ID: b3229b9f-5dbd-4797-ad4b-7b9d26a1aaf2 (type: string )
+
+Orders columns:
+   id : bigint
+   vendor_id : uuid
+   driver_id : uuid
+   product_name : character varying
+   quantity : integer
+   total_amount : numeric
+   customer_name : character varying
+   customer_phone : character varying
+   order_date : timestamp without time zone
+   status : character varying
+   order_type : character varying
+   vehicle_type : character varying
+   pickup_address : text
+   pickup_latitude : numeric
+   pickup_longitude : numeric
+   delivery_address : text
+   delivery_latitude : numeric
+   delivery_longitude : numeric
+   vendor_shop_name : character varying
+   delivery_fee : numeric
+   delivery_otp : character varying
+   model_id_requested : character varying
+   model_name_requested : character varying
+   weight_capacity_requested : numeric
+   body_type_requested : character varying
+   items : jsonb
+   driver_name : character varying
+   driver_number : integer
+   created_at : timestamp without time zone
+   updated_at : timestamp without time zone
+
+Query OK, rows: 0
+Settlements OK, rows: 0
+Invoices OK, rows: 0
