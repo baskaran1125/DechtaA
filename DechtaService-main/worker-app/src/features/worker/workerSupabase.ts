@@ -7,6 +7,47 @@ const WORKER_API_ORIGIN = (
 ).replace(/\/+$/, '');
 const API_BASE = WORKER_API_ORIGIN ? `${WORKER_API_ORIGIN}/api/worker` : '/api/worker';
 
+function getWorkerAssetBaseUrl() {
+  const runtimeOrigin = typeof window !== 'undefined' ? window.location.origin : '';
+  return (WORKER_API_ORIGIN || runtimeOrigin).replace(/\/+$/, '');
+}
+
+export function resolveWorkerAssetUrl(value: string) {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+
+  if (raw.startsWith('blob:') || raw.startsWith('data:')) {
+    return raw;
+  }
+
+  const baseUrl = getWorkerAssetBaseUrl();
+
+  if (raw.startsWith('/uploads/')) {
+    return baseUrl ? `${baseUrl}${raw}` : raw;
+  }
+
+  if (raw.startsWith('uploads/')) {
+    return baseUrl ? `${baseUrl}/${raw}` : `/${raw}`;
+  }
+
+  try {
+    const parsed = new URL(raw);
+    const shouldRewriteHost =
+      /your-public-backend-url\.com/i.test(parsed.hostname) ||
+      ((parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1') &&
+        baseUrl &&
+        !baseUrl.includes(parsed.hostname));
+
+    if (!shouldRewriteHost || !baseUrl) {
+      return raw;
+    }
+
+    return `${baseUrl}${parsed.pathname}${parsed.search}${parsed.hash}`;
+  } catch {
+    return raw;
+  }
+}
+
 const isNgrokHost = /(^|\.)ngrok(-free)?\.app$|(^|\.)ngrok(-free)?\.dev$/i.test(
   (() => {
     try {
@@ -347,4 +388,3 @@ export async function getJobRateSettings(skillCategory?: string) {
   const params = skillCategory ? `?skillCategory=${encodeURIComponent(skillCategory)}` : '';
   return request(`/job-rate-settings${params}`);
 }
-

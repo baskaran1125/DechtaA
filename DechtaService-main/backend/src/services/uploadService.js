@@ -11,6 +11,14 @@ function sanitizeSegment(value) {
     .replace(/^\/+|\/+$/g, '');
 }
 
+function getResolvedPublicBaseUrl() {
+  const fromEnv = String(process.env.PUBLIC_API_URL || '').trim().replace(/\/$/, '');
+  if (fromEnv && !/your-public-backend-url\.com/i.test(fromEnv)) {
+    return fromEnv;
+  }
+  return `http://localhost:${process.env.PORT || 5003}`;
+}
+
 // ──────────────────────────────────────────────────────────────
 // Upload a file buffer to local storage
 // Returns the file path and public URL
@@ -36,7 +44,7 @@ async function uploadFile({ bucket, folder, filename, buffer, mimetype }) {
     
     // Generate relative path for storage
     const relativePath = path.join(safeBucket, safeFolder, uniqueName).replace(/\\/g, '/');
-    const baseUrl = process.env.PUBLIC_API_URL || 'http://localhost:5003';
+    const baseUrl = getResolvedPublicBaseUrl();
     
     return {
       path: relativePath,
@@ -56,7 +64,7 @@ async function uploadFile({ bucket, folder, filename, buffer, mimetype }) {
 async function getSignedUrl(bucket, filePath, expiresInSeconds = 3600) {
   try {
     // For local storage, just return the public URL
-    const baseUrl = process.env.PUBLIC_API_URL || 'http://localhost:5003';
+    const baseUrl = getResolvedPublicBaseUrl();
     return `${baseUrl}/uploads/${filePath}`;
   } catch (err) {
     throw new Error(`Failed to get signed URL: ${err.message}`);

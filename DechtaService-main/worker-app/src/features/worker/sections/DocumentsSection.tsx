@@ -1,10 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
 import { Upload, Camera, Check, X, AlertCircle, FileText, DollarSign, User, Building } from 'lucide-react';
 import { useWorker } from '../WorkerContext';
-import { getWorkerProfile, uploadWorkerDocuments, submitBankDetails } from '../workerSupabase';
+import { getWorkerProfile, uploadWorkerDocuments, submitBankDetails, getBankDetails, resolveWorkerAssetUrl } from '../workerSupabase';
 
 export default function DocumentsSection() {
   const { state, setState, showToast, t } = useWorker();
+
+  type DocumentUrlState = {
+    photo: string;
+    aadharFront: string;
+    aadharBack: string;
+    panFront: string;
+    panBack: string;
+    mandate: string;
+  };
   
   // Document states
   const [photoFile, setPhotoFile] = useState<File | null>(null);
@@ -30,6 +39,59 @@ export default function DocumentsSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
+  const [reviewStatus, setReviewStatus] = useState('');
+  const [rejectionReason, setRejectionReason] = useState('');
+  const [documentUrls, setDocumentUrls] = useState<DocumentUrlState>({
+    photo: '',
+    aadharFront: '',
+    aadharBack: '',
+    panFront: '',
+    panBack: '',
+    mandate: '',
+  });
+  const [imagePreviewErrors, setImagePreviewErrors] = useState<Partial<Record<keyof DocumentUrlState, boolean>>>({});
+  const objectUrlRef = useRef<Partial<DocumentUrlState>>({});
+  const photoInputRef = useRef<HTMLInputElement>(null);
+  const aadharFrontInputRef = useRef<HTMLInputElement>(null);
+  const aadharBackInputRef = useRef<HTMLInputElement>(null);
+  const panFrontInputRef = useRef<HTMLInputElement>(null);
+  const panBackInputRef = useRef<HTMLInputElement>(null);
+  const mandateInputRef = useRef<HTMLInputElement>(null);
+
+  const updateDocumentUrl = (
+    key: keyof DocumentUrlState,
+    nextUrl: string,
+    options?: { revokePrevious?: boolean }
+  ) => {
+    if (options?.revokePrevious && objectUrlRef.current[key]?.startsWith('blob:')) {
+      URL.revokeObjectURL(objectUrlRef.current[key] as string);
+      delete objectUrlRef.current[key];
+    }
+
+    setDocumentUrls(prev => ({ ...prev, [key]: nextUrl }));
+  };
+
+  const setDocumentFile = (
+    key: keyof DocumentUrlState,
+    setter: (file: File | null) => void,
+    file: File | null
+  ) => {
+    setter(file);
+
+    if (!file) {
+      updateDocumentUrl(key, '', { revokePrevious: true });
+      return;
+    }
+
+    updateDocumentUrl(key, '', { revokePrevious: true });
+    const objectUrl = URL.createObjectURL(file);
+    objectUrlRef.current[key] = objectUrl;
+    setImagePreviewErrors(prev => ({ ...prev, [key]: false }));
+    updateDocumentUrl(key, objectUrl);
+  };
+
+  const isRejected = reviewStatus === 'rejected' || Boolean(rejectionReason);
+  const hasDocument = (key: keyof DocumentUrlState, file?: File | null) => Boolean(file || documentUrls[key]);
 
   useEffect(() => {
     if (stream && videoRef.current) {
@@ -43,7 +105,10 @@ export default function DocumentsSection() {
 
     const loadSavedDocuments = async () => {
       try {
-        const res = await getWorkerProfile();
+        const [res, bankRes] = await Promise.all([
+          getWorkerProfile(),
+          getBankDetails().catch(() => null),
+        ]);
         const worker = res?.worker || res?.data?.worker;
         if (!worker || cancelled) return;
 
@@ -51,11 +116,33 @@ export default function DocumentsSection() {
         const resolvedAadharNumber = String(worker?.aadharNumber || '').trim();
         const resolvedPanNumber = String(worker?.panNumber || '').trim();
         const resolvedSubmitted = Boolean(worker?.isDocumentsSubmitted ?? worker?.is_documents_submitted ?? false);
+        const resolvedReviewStatus = String(worker?.verificationStatus || worker?.verification_status || '').trim().toLowerCase();
+        const resolvedRejectionReason = String(worker?.rejectionReason || worker?.rejection_reason || '').trim();
+        const resolvedPhotoUrl = resolveWorkerAssetUrl(String(worker?.photoUrl || worker?.photo_url || '').trim());
+        const resolvedAadharUrl = resolveWorkerAssetUrl(String(worker?.aadharUrl || worker?.aadhar_url || '').trim());
+        const resolvedPanUrl = resolveWorkerAssetUrl(String(worker?.panUrl || worker?.pan_url || '').trim());
+        const resolvedMandateUrl = resolveWorkerAssetUrl(String(worker?.bankMandateUrl || worker?.bank_mandate_url || '').trim());
+        const bankDetails = bankRes?.data || bankRes?.bankDetails || null;
 
         if (resolvedQualification) setQualification(resolvedQualification);
         if (resolvedAadharNumber) setAadharNumber(resolvedAadharNumber);
         if (resolvedPanNumber) setPanNumber(resolvedPanNumber);
+        if (bankDetails) {
+          setBankName(String(bankDetails.bank_name || bankDetails.bankName || ''));
+          setBranchName(String(bankDetails.branch_name || bankDetails.branchName || ''));
+          setAccountNumber(String(bankDetails.account_number || bankDetails.accountNumber || ''));
+          setIfscCode(String(bankDetails.ifsc_code || bankDetails.ifscCode || ''));
+        }
         setSubmitted(resolvedSubmitted);
+        setReviewStatus(resolvedReviewStatus);
+        setRejectionReason(resolvedRejectionReason);
+        setDocumentUrls(prev => ({
+          ...prev,
+          photo: resolvedPhotoUrl || prev.photo,
+          aadharFront: resolvedAadharUrl || prev.aadharFront,
+          panFront: resolvedPanUrl || prev.panFront,
+          mandate: resolvedMandateUrl || prev.mandate,
+        }));
 
         setState(prev => ({
           ...prev,
@@ -86,6 +173,16 @@ export default function DocumentsSection() {
       }
     };
   }, [stream]);
+
+  useEffect(() => {
+    return () => {
+      Object.values(objectUrlRef.current).forEach((url) => {
+        if (url?.startsWith('blob:')) {
+          URL.revokeObjectURL(url);
+        }
+      });
+    };
+  }, []);
 
   const startCamera = async (mode: 'photo' | 'aadhar-front' | 'aadhar-back' | 'pan-front' | 'pan-back') => {
     try {
@@ -126,11 +223,11 @@ export default function DocumentsSection() {
             { type: 'image/jpeg' }
           );
           
-          if (cameraMode === 'photo') setPhotoFile(file);
-          else if (cameraMode === 'aadhar-front') setAadharFrontFile(file);
-          else if (cameraMode === 'aadhar-back') setAadharBackFile(file);
-          else if (cameraMode === 'pan-front') setPanFrontFile(file);
-          else if (cameraMode === 'pan-back') setPanBackFile(file);
+          if (cameraMode === 'photo') setDocumentFile('photo', setPhotoFile, file);
+          else if (cameraMode === 'aadhar-front') setDocumentFile('aadharFront', setAadharFrontFile, file);
+          else if (cameraMode === 'aadhar-back') setDocumentFile('aadharBack', setAadharBackFile, file);
+          else if (cameraMode === 'pan-front') setDocumentFile('panFront', setPanFrontFile, file);
+          else if (cameraMode === 'pan-back') setDocumentFile('panBack', setPanBackFile, file);
           
           stopCamera();
         }
@@ -138,17 +235,157 @@ export default function DocumentsSection() {
     }
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, setter: (file: File | null) => void) => {
+  const handleFileUpload = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    key: keyof DocumentUrlState,
+    setter: (file: File | null) => void
+  ) => {
     if (e.target.files && e.target.files[0]) {
-      setter(e.target.files[0]);
+      setDocumentFile(key, setter, e.target.files[0]);
     }
+  };
+
+  const renderDocumentPreview = (url: string, label: string) => {
+    if (!url) return null;
+
+    const isPdf = /\.pdf($|\?)/i.test(url);
+    const documentKey = (() => {
+      if (label === 'Photo Preview') return 'photo';
+      if (label === 'Front Preview' && url === documentUrls.aadharFront) return 'aadharFront';
+      if (label === 'Back Preview' && url === documentUrls.aadharBack) return 'aadharBack';
+      if (label === 'Front Preview' && url === documentUrls.panFront) return 'panFront';
+      if (label === 'Back Preview' && url === documentUrls.panBack) return 'panBack';
+      return 'mandate';
+    })() as keyof DocumentUrlState;
+
+    const inputRefMap: Record<keyof DocumentUrlState, React.RefObject<HTMLInputElement>> = {
+      photo: photoInputRef,
+      aadharFront: aadharFrontInputRef,
+      aadharBack: aadharBackInputRef,
+      panFront: panFrontInputRef,
+      panBack: panBackInputRef,
+      mandate: mandateInputRef,
+    };
+
+    const previewFailed = imagePreviewErrors[documentKey];
+
+    return (
+      <div
+        style={{
+          marginTop: 8,
+          border: '1px solid var(--border)',
+          borderRadius: 12,
+          padding: 10,
+          background: 'rgba(255, 255, 255, 0.04)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 8 }}>
+          <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.04em' }}>{label}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span
+              style={{
+                fontSize: 10,
+                fontWeight: 700,
+                color: 'var(--success)',
+                background: 'rgba(34, 197, 94, 0.14)',
+                borderRadius: 999,
+                padding: '3px 8px',
+              }}
+            >
+              READY
+            </span>
+            <button
+              type="button"
+              onClick={() => inputRefMap[documentKey].current?.click()}
+              className="w-btn w-btn-outline"
+              style={{ fontSize: 10, padding: '4px 8px', minHeight: 'auto' }}
+            >
+              EDIT
+            </button>
+          </div>
+        </div>
+
+        {isPdf ? (
+          <a
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              textDecoration: 'none',
+              color: 'inherit',
+              border: '1px dashed var(--border)',
+              borderRadius: 10,
+              padding: 12,
+            }}
+          >
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'rgba(59, 130, 246, 0.12)',
+                color: 'var(--primary)',
+                flexShrink: 0,
+              }}
+            >
+              <FileText size={20} />
+            </div>
+            <div>
+              <p style={{ margin: 0, fontSize: 12, fontWeight: 600 }}>Document uploaded</p>
+              <p style={{ margin: '4px 0 0', fontSize: 11, color: 'var(--text-muted)' }}>Tap to open</p>
+            </div>
+          </a>
+        ) : previewFailed ? (
+          <div
+            style={{
+              border: '1px dashed var(--border)',
+              borderRadius: 10,
+              padding: 16,
+              textAlign: 'center',
+            }}
+          >
+            <p style={{ margin: 0, fontSize: 12, fontWeight: 600 }}>Image preview unavailable</p>
+            <p style={{ margin: '4px 0 0', fontSize: 11, color: 'var(--text-muted)' }}>
+              Use Edit, Upload, or Capture to replace this file.
+            </p>
+          </div>
+        ) : (
+          <div
+            style={{
+              overflow: 'hidden',
+              borderRadius: 10,
+              border: '1px solid var(--border)',
+              background: 'rgba(255, 255, 255, 0.03)',
+            }}
+          >
+            <img
+              src={url}
+              alt={`${label} preview`}
+              onError={() => setImagePreviewErrors(prev => ({ ...prev, [documentKey]: true }))}
+              style={{
+                display: 'block',
+                width: '100%',
+                height: 160,
+                objectFit: 'cover',
+              }}
+            />
+          </div>
+        )}
+      </div>
+    );
   };
 
   const handleSubmitDocuments = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validation
-    if (!photoFile) {
+    if (!hasDocument('photo', photoFile)) {
       showToast('Please upload a photo', 'error');
       return;
     }
@@ -160,7 +397,7 @@ export default function DocumentsSection() {
       showToast('Please enter your Aadhar number', 'error');
       return;
     }
-    if (!aadharFrontFile || !aadharBackFile) {
+    if (!hasDocument('aadharFront', aadharFrontFile) || !hasDocument('aadharBack', aadharBackFile)) {
       showToast('Please upload both front and back of Aadhar', 'error');
       return;
     }
@@ -168,7 +405,7 @@ export default function DocumentsSection() {
       showToast('Please enter your PAN number', 'error');
       return;
     }
-    if (!panFrontFile || !panBackFile) {
+    if (!hasDocument('panFront', panFrontFile) || !hasDocument('panBack', panBackFile)) {
       showToast('Please upload both front and back of PAN', 'error');
       return;
     }
@@ -176,7 +413,7 @@ export default function DocumentsSection() {
       showToast('Please fill all bank details', 'error');
       return;
     }
-    if (!mandateFile) {
+    if (!hasDocument('mandate', mandateFile)) {
       showToast('Please upload bank mandate', 'error');
       return;
     }
@@ -184,7 +421,7 @@ export default function DocumentsSection() {
     setLoading(true);
     try {
       // Upload documents
-      await uploadWorkerDocuments({
+      const uploadResponse = await uploadWorkerDocuments({
         qualification,
         aadharNumber,
         panNumber,
@@ -195,6 +432,19 @@ export default function DocumentsSection() {
         panBackFile,
         passbookFile: mandateFile,
       });
+      const uploadedUrls = uploadResponse?.urls || {};
+
+      setDocumentUrls(prev => ({
+        ...prev,
+        photo: resolveWorkerAssetUrl(String(uploadedUrls.photoFile || prev.photo || '')),
+        aadharFront: resolveWorkerAssetUrl(String(uploadedUrls.aadharFrontFile || uploadedUrls.aadharFile || prev.aadharFront || '')),
+        aadharBack: resolveWorkerAssetUrl(String(uploadedUrls.aadharBackFile || prev.aadharBack || '')),
+        panFront: resolveWorkerAssetUrl(String(uploadedUrls.panFrontFile || uploadedUrls.panFile || prev.panFront || '')),
+        panBack: resolveWorkerAssetUrl(String(uploadedUrls.panBackFile || prev.panBack || '')),
+        mandate: resolveWorkerAssetUrl(String(uploadedUrls.passbookFile || prev.mandate || '')),
+      }));
+      setReviewStatus('pending');
+      setRejectionReason('');
 
       // Submit bank details
       await submitBankDetails({
@@ -216,7 +466,7 @@ export default function DocumentsSection() {
             account: accountNumber,
             ifsc: ifscCode,
             passbookFile: mandateFile,
-            status: 'submitted'
+            status: 'pending'
           }
         }
       }));
@@ -266,7 +516,7 @@ export default function DocumentsSection() {
   }
 
   // Status message
-  if (submitted) {
+  if (submitted && !isRejected) {
     return (
       <div style={{ padding: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <div className="w-glass w-card" style={{ maxWidth: 500, textAlign: 'center' }}>
@@ -286,6 +536,18 @@ export default function DocumentsSection() {
   // Document upload form
   return (
     <div style={{ padding: 20, display: 'grid', gridTemplateColumns: '1fr', gap: 24 }}>
+      {isRejected && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 12, padding: 16, backgroundColor: 'rgba(239, 68, 68, 0.1)', borderRadius: 12, border: '1px solid rgba(239, 68, 68, 0.25)' }}>
+          <AlertCircle size={20} style={{ color: '#ef4444', flexShrink: 0, marginTop: 2 }} />
+          <div>
+            <p style={{ fontWeight: 700, fontSize: 14, color: '#ef4444', margin: 0, marginBottom: 4 }}>Admin requested document changes</p>
+            <p style={{ fontSize: 12, color: 'var(--text-main)', margin: 0 }}>
+              {rejectionReason || 'One or more uploaded images need to be corrected. Replace the affected file and submit again.'}
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Photo */}
       <div className="w-glass w-card">
         <div className="w-card-header">
@@ -304,9 +566,10 @@ export default function DocumentsSection() {
           </button>
           <label>
             <input
+              ref={photoInputRef}
               type="file"
               accept="image/*"
-              onChange={(e) => handleFileUpload(e, setPhotoFile)}
+              onChange={(e) => handleFileUpload(e, 'photo', setPhotoFile)}
               style={{ display: 'none' }}
             />
             <div
@@ -323,11 +586,7 @@ export default function DocumentsSection() {
             </div>
           </label>
         </div>
-        {photoFile && (
-          <p style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--success)', marginTop: 12, fontSize: 12 }}>
-            <Check size={16} /> {photoFile.name}
-          </p>
-        )}
+        {renderDocumentPreview(documentUrls.photo, 'Photo Preview')}
       </div>
 
       {/* Qualification */}
@@ -370,9 +629,10 @@ export default function DocumentsSection() {
               </button>
               <label>
                 <input
+                  ref={aadharFrontInputRef}
                   type="file"
                   accept="image/*"
-                  onChange={(e) => handleFileUpload(e, setAadharFrontFile)}
+                  onChange={(e) => handleFileUpload(e, 'aadharFront', setAadharFrontFile)}
                   style={{ display: 'none' }}
                 />
                 <div
@@ -391,11 +651,7 @@ export default function DocumentsSection() {
                 </div>
               </label>
             </div>
-            {aadharFrontFile && (
-              <p style={{ fontSize: 11, color: 'var(--success)', marginTop: 8, display: 'flex', alignItems: 'center', gap: 4 }}>
-                <Check size={12} /> Done
-              </p>
-            )}
+            {renderDocumentPreview(documentUrls.aadharFront, 'Front Preview')}
           </div>
 
           <div>
@@ -411,9 +667,10 @@ export default function DocumentsSection() {
               </button>
               <label>
                 <input
+                  ref={aadharBackInputRef}
                   type="file"
                   accept="image/*"
-                  onChange={(e) => handleFileUpload(e, setAadharBackFile)}
+                  onChange={(e) => handleFileUpload(e, 'aadharBack', setAadharBackFile)}
                   style={{ display: 'none' }}
                 />
                 <div
@@ -432,11 +689,7 @@ export default function DocumentsSection() {
                 </div>
               </label>
             </div>
-            {aadharBackFile && (
-              <p style={{ fontSize: 11, color: 'var(--success)', marginTop: 8, display: 'flex', alignItems: 'center', gap: 4 }}>
-                <Check size={12} /> Done
-              </p>
-            )}
+            {renderDocumentPreview(documentUrls.aadharBack, 'Back Preview')}
           </div>
         </div>
       </div>
@@ -468,9 +721,10 @@ export default function DocumentsSection() {
               </button>
               <label>
                 <input
+                  ref={panFrontInputRef}
                   type="file"
                   accept="image/*"
-                  onChange={(e) => handleFileUpload(e, setPanFrontFile)}
+                  onChange={(e) => handleFileUpload(e, 'panFront', setPanFrontFile)}
                   style={{ display: 'none' }}
                 />
                 <div
@@ -489,11 +743,7 @@ export default function DocumentsSection() {
                 </div>
               </label>
             </div>
-            {panFrontFile && (
-              <p style={{ fontSize: 11, color: 'var(--success)', marginTop: 8, display: 'flex', alignItems: 'center', gap: 4 }}>
-                <Check size={12} /> Done
-              </p>
-            )}
+            {renderDocumentPreview(documentUrls.panFront, 'Front Preview')}
           </div>
 
           <div>
@@ -509,9 +759,10 @@ export default function DocumentsSection() {
               </button>
               <label>
                 <input
+                  ref={panBackInputRef}
                   type="file"
                   accept="image/*"
-                  onChange={(e) => handleFileUpload(e, setPanBackFile)}
+                  onChange={(e) => handleFileUpload(e, 'panBack', setPanBackFile)}
                   style={{ display: 'none' }}
                 />
                 <div
@@ -530,11 +781,7 @@ export default function DocumentsSection() {
                 </div>
               </label>
             </div>
-            {panBackFile && (
-              <p style={{ fontSize: 11, color: 'var(--success)', marginTop: 8, display: 'flex', alignItems: 'center', gap: 4 }}>
-                <Check size={12} /> Done
-              </p>
-            )}
+            {renderDocumentPreview(documentUrls.panBack, 'Back Preview')}
           </div>
         </div>
       </div>
@@ -586,9 +833,10 @@ export default function DocumentsSection() {
         <p className="w-profile-label">BANK MANDATE</p>
         <label>
           <input
+            ref={mandateInputRef}
             type="file"
             accept="image/*,.pdf"
-            onChange={(e) => handleFileUpload(e, setMandateFile)}
+            onChange={(e) => handleFileUpload(e, 'mandate', setMandateFile)}
             style={{ display: 'none' }}
           />
           <div
@@ -605,11 +853,7 @@ export default function DocumentsSection() {
             <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--primary)', margin: 0 }}>Click to upload mandate</p>
           </div>
         </label>
-        {mandateFile && (
-          <p style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--success)', marginTop: 12, fontSize: 12 }}>
-            <Check size={16} /> {mandateFile.name}
-          </p>
-        )}
+        {renderDocumentPreview(documentUrls.mandate, 'Mandate Preview')}
       </div>
 
       {/* Warning */}
@@ -646,7 +890,7 @@ export default function DocumentsSection() {
         ) : (
           <>
             <Check size={18} />
-            Submit Documents
+            {isRejected ? 'Resubmit Documents' : 'Submit Documents'}
           </>
         )}
       </button>

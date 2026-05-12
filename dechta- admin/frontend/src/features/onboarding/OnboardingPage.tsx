@@ -109,6 +109,10 @@ function resolveDriverDocsBase(): string {
     return String(import.meta.env.VITE_DRIVER_DOCS_URL || "http://127.0.0.1:5003").trim().replace(/\/+$/, "");
 }
 
+function resolveWorkerDocsBase(): string {
+    return String(import.meta.env.VITE_WORKER_DOCS_URL || "http://127.0.0.1:5003").trim().replace(/\/+$/, "");
+}
+
 function normalizeDocUrl(url: string | null | undefined): string | null {
     const raw = pickPrimaryDocumentUrl(url);
     if (!raw) return null;
@@ -116,11 +120,19 @@ function normalizeDocUrl(url: string | null | undefined): string | null {
     if (raw.startsWith("data:")) return raw;
 
     const normalizedPath = raw.replace(/\\/g, "/");
+    const isWorkerDocumentPath =
+        normalizedPath.startsWith("worker-documents/") ||
+        normalizedPath.startsWith("/worker-documents/") ||
+        normalizedPath.includes("/uploads/worker-documents/");
     const isDriverDocumentPath =
         normalizedPath.startsWith("driver-documents/") ||
         normalizedPath.startsWith("/driver-documents/") ||
         normalizedPath.includes("/uploads/driver-documents/");
-    const backendBase = isDriverDocumentPath ? resolveDriverDocsBase() : resolveAdminBackendBase();
+    const backendBase = isDriverDocumentPath
+        ? resolveDriverDocsBase()
+        : isWorkerDocumentPath
+            ? resolveWorkerDocsBase()
+            : resolveAdminBackendBase();
 
     // Fix legacy absolute localhost URLs by re-basing them to the configured backend host.
     if (/^https?:\/\//i.test(raw)) {
@@ -135,7 +147,28 @@ function normalizeDocUrl(url: string | null | undefined): string | null {
             }
             return raw.replace(/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i, backendBase);
         }
+        if (isWorkerDocumentPath) {
+            const uploadMatch = normalizedPath.match(/\/uploads\/(worker-documents\/.*)$/i);
+            if (uploadMatch?.[1]) {
+                return `${backendBase}/uploads/${uploadMatch[1]}`;
+            }
+            const docMatch = normalizedPath.match(/\/(worker-documents\/.*)$/i);
+            if (docMatch?.[1]) {
+                return `${backendBase}/uploads/${docMatch[1]}`;
+            }
+            return raw.replace(/^https?:\/\/(localhost|127\.0\.0\.1|your-public-backend-url\.com)(:\d+)?/i, backendBase);
+        }
         return raw;
+    }
+
+    if (normalizedPath.startsWith("/uploads/worker-documents/")) {
+        return `${backendBase}${normalizedPath}`;
+    }
+    if (normalizedPath.startsWith("worker-documents/")) {
+        return `${backendBase}/uploads/${normalizedPath}`;
+    }
+    if (normalizedPath.startsWith("/worker-documents/")) {
+        return `${backendBase}/uploads${normalizedPath}`;
     }
 
     if (normalizedPath.startsWith("/uploads/driver-documents/")) {
@@ -391,7 +424,8 @@ export default function OnboardingPage({
         queryFn: async () => {
             const res = await fetch(`/api/ops/onboarding/manpower/${selectedWorker!.id}/documents`, { credentials: "include" });
             if (!res.ok) throw new Error("Failed to fetch");
-            const row = await res.json();
+            const payload = await res.json();
+            const row = payload?.data ?? payload ?? {};
             return {
                 workerId: selectedWorker!.id,
                 photoUrl: row?.photoUrl ?? row?.photo_url ?? selectedWorker?.photoUrl ?? null,
@@ -402,6 +436,8 @@ export default function OnboardingPage({
             };
         },
         enabled: !!selectedWorker,
+        staleTime: 0,
+        refetchOnMount: "always",
     });
 
     const driverDocs = useQuery<DriverOnboardingDocs>({

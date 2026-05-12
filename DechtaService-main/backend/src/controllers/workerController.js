@@ -419,10 +419,45 @@ async function ensureWorkerCoreSchema() {
 
 function getApiBaseUrl(request) {
   const fromEnv = String(process.env.PUBLIC_API_URL || '').trim();
-  if (fromEnv) return fromEnv.replace(/\/$/, '');
+  if (fromEnv && !/your-public-backend-url\.com/i.test(fromEnv)) return fromEnv.replace(/\/$/, '');
   const protocol = request.protocol || 'http';
   const host = request.headers.host;
   return `${protocol}://${host}`;
+}
+
+function normalizeWorkerAssetUrl(url, request) {
+  const raw = String(url || '').trim();
+  if (!raw) return '';
+
+  const baseUrl = getApiBaseUrl(request);
+
+  if (raw.startsWith('blob:') || raw.startsWith('data:')) {
+    return raw;
+  }
+
+  if (raw.startsWith('/uploads/')) {
+    return `${baseUrl}${raw}`;
+  }
+
+  if (raw.startsWith('uploads/')) {
+    return `${baseUrl}/${raw}`;
+  }
+
+  try {
+    const parsed = new URL(raw);
+    const shouldRewriteHost =
+      /your-public-backend-url\.com/i.test(parsed.hostname) ||
+      parsed.hostname === 'localhost' ||
+      parsed.hostname === '127.0.0.1';
+
+    if (!shouldRewriteHost) {
+      return raw;
+    }
+
+    return `${baseUrl}${parsed.pathname}${parsed.search}${parsed.hash}`;
+  } catch {
+    return raw;
+  }
 }
 
 function getCashfreeBaseUrl() {
@@ -821,7 +856,7 @@ async function getWorkerProfile(request, reply) {
       [request.worker.id]
     );
     if (!result.rows[0]) return reply.code(404).send({ success: false, message: 'Worker not found' });
-    return reply.send({ success: true, worker: formatWorker(result.rows[0]) });
+    return reply.send({ success: true, worker: formatWorker(result.rows[0], request) });
   } catch (err) {
     request.log.error(err);
     return reply.code(500).send({ success: false, message: err.message });
@@ -835,7 +870,22 @@ async function getProfile(request, reply) {
   try {
     await ensureWorkerCoreSchema();
     const result = await db.query(
-      'SELECT * FROM worker_profiles WHERE id = $1 LIMIT 1',
+      `SELECT wp.*,
+              wd.photo_url AS document_photo_url,
+              wd.aadhar_url AS document_aadhar_url,
+              wd.pan_url AS document_pan_url,
+              wd.skill_certificate_url AS document_skill_certificate_url,
+              wd.bank_mandate_url AS document_bank_mandate_url,
+              u.verification_status AS user_verification_status,
+              u.rejection_reason AS user_rejection_reason,
+              u.status AS user_status
+         FROM worker_profiles wp
+         LEFT JOIN worker_documents wd
+           ON wd.worker_id = wp.id::text
+         LEFT JOIN users u
+           ON u.id = wp.user_id
+        WHERE wp.id = $1
+        LIMIT 1`,
       [request.worker.id]
     );
     if (!result.rows[0]) return reply.code(404).send({ success: false, message: 'Worker not found' });
@@ -1009,7 +1059,10 @@ async function uploadWorkerDocuments(request, reply) {
             buffer,
             mimetype: part.mimetype,
           });
-          uploadedUrls[part.fieldname] = result.publicUrl;
+          uploadedUrls[part.fieldname] = normalizeWorkerAssetUrl(
+            result.publicUrl || `/uploads/${String(result.path || '').replace(/^\/+/, '')}`,
+            request
+          );
         } catch (uploadErr) {
           request.log.error({ fieldname: part.fieldname, err: uploadErr }, 'File upload failed');
         }
@@ -1096,6 +1149,18 @@ async function uploadWorkerDocuments(request, reply) {
       `UPDATE worker_profiles SET is_documents_submitted = true, updated_at = NOW() WHERE id = $1`,
       [workerId]
     ).catch(() => {});
+
+    if (request.worker?.user_id != null) {
+      await db.query(
+        `UPDATE users
+            SET is_approved = false,
+                verification_status = 'pending',
+                rejection_reason = NULL,
+                status = 'active'
+          WHERE id = $1`,
+        [request.worker.user_id]
+      ).catch(() => {});
+    }
 
     return reply.code(200).send({
       success: true,
@@ -1987,7 +2052,17 @@ async function workerLogout(request, reply) {
 }
 
 // ── Helper ────────────────────────────────────────────────────
-function formatWorker(w) {
+function formatWorker(w, request) {
+  const userStatus = String(w.user_status || '').toLowerCase();
+  const userVerification = String(w.user_verification_status || '').toLowerCase();
+  const isRejected =
+    userVerification === 'rejected' ||
+    ['rejected', 'suspended', 'inactive', 'banned', 'blocked'].includes(userStatus);
+  const isApproved = !isRejected && (
+    w.is_approved === true ||
+    userVerification === 'verified'
+  );
+
   return {
     id:               w.id,
     phone:            w.phone,
@@ -2002,7 +2077,7 @@ function formatWorker(w) {
     city:             w.city || '',
     area:             w.area || '',
     address:          w.address || '',
-    isApproved:       w.is_approved || false,
+    isApproved:       isApproved,
     isRegistered:     w.is_profile_complete || false,
     isProfileComplete: w.is_profile_complete || false,
     isDocumentsSubmitted: w.is_documents_submitted || false,
@@ -2011,6 +2086,13 @@ function formatWorker(w) {
     rating:           w.rating || '0',
     isPremium:        false,
     isFrozen:         false,
+    verificationStatus: isRejected ? 'rejected' : (isApproved ? 'verified' : 'pending'),
+    rejectionReason:  w.user_rejection_reason || null,
+    photoUrl:         normalizeWorkerAssetUrl(w.document_photo_url || w.photo_url || '', request),
+    aadharUrl:        normalizeWorkerAssetUrl(w.document_aadhar_url || '', request),
+    panUrl:           normalizeWorkerAssetUrl(w.document_pan_url || '', request),
+    skillCertificateUrl: normalizeWorkerAssetUrl(w.document_skill_certificate_url || '', request),
+    bankMandateUrl:   normalizeWorkerAssetUrl(w.document_bank_mandate_url || '', request),
     createdAt:        w.created_at,
   };
 }
@@ -2152,4 +2234,3 @@ module.exports = {
   acceptJobRequest,
   declineJobRequest,
 };
-
