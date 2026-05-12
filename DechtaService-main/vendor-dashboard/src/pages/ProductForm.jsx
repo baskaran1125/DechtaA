@@ -264,7 +264,7 @@ const ProductForm = ({ onSave, editingProduct, onCancel, notify }) => {
     if (detailWords > DETAIL_MAX) return notify(`Detailed Description exceeds ${DETAIL_MAX} words`, 'error');
     if (form.mrp && Number(form.price) > Number(form.mrp))
       return notify('Selling Price cannot exceed Unit Price', 'error');
-    onSave({ ...form, unitPrice: form.mrp, vehicleType: vehicle });
+    onSave({ ...form, unitPrice: form.mrp, vehicleType: vehicle, gstPercent });
   };
 
   return (

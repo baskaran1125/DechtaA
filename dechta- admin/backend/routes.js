@@ -25,7 +25,7 @@ const upload = multer({ dest: path.join(process.cwd(), "uploads/") });
 function getUploadUrl(req, filename) {
     const protocol = req.protocol;
     const backendHost = process.env.BACKEND_HOST || process.env.HOST || "localhost";
-    const backendPort = process.env.PORT || "5001";
+    const backendPort = process.env.PORT || "5003";
     return `${protocol}://${backendHost}:${backendPort}/uploads/${filename}`;
 }
 // WebSocket: tracking clients

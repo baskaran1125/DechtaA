@@ -103,19 +103,8 @@ function mapWorker(row, index) {
   };
 }
 
-// Ensure photo_url column exists (safe — runs once per server start)
-let photoUrlColumnReady = false;
-async function ensurePhotoUrlColumn() {
-  if (photoUrlColumnReady) return;
-  photoUrlColumnReady = true;
-  await pool.query(
-    `ALTER TABLE worker_profiles ADD COLUMN IF NOT EXISTS photo_url TEXT`
-  ).catch(() => {});
-}
-
 async function getApprovedWorkers(req, res, next) {
   try {
-    await ensurePhotoUrlColumn();
     const { rows } = await pool.query(
       `
         SELECT
@@ -132,7 +121,7 @@ async function getApprovedWorkers(req, res, next) {
           wp.last_location_at,
           wp.is_online,
           wp.rating,
-          wp.photo_url
+          wp.avatar_url AS photo_url
         FROM worker_profiles wp
         JOIN users u ON u.id = wp.user_id
         WHERE COALESCE(wp.is_approved, u.is_approved, false) = true

@@ -101,6 +101,23 @@ async function ensureVendorCompatibilitySchema() {
             `ALTER TABLE vendors ADD COLUMN IF NOT EXISTS location_label TEXT`,
             `ALTER TABLE vendors ADD COLUMN IF NOT EXISTS location_updated_at TIMESTAMPTZ`,
             `ALTER TABLE vendor_profiles ALTER COLUMN user_id DROP NOT NULL`,
+            // Products table — ensure all columns expected by productsController exist
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS name VARCHAR(255)`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS product_name VARCHAR(255)`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS detailed_description TEXT`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS selling_price NUMERIC(12,2)`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS mrp NUMERIC(12,2)`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS stock INTEGER DEFAULT 0`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS stock_quantity INTEGER DEFAULT 0`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS unit VARCHAR(20) DEFAULT 'pcs'`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS weight_kg NUMERIC(10,2)`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS images JSONB DEFAULT '[]'::jsonb`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS gst_percent NUMERIC(5,2)`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS brand VARCHAR(100)`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS warranty TEXT`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS total_price NUMERIC(12,2)`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS status VARCHAR(50) DEFAULT 'pending'`,
+            `ALTER TABLE products ADD COLUMN IF NOT EXISTS is_boosted BOOLEAN DEFAULT FALSE`,
           ];
           for (const sql of alters) {
             await safeSchemaQuery(sql);
@@ -436,16 +453,16 @@ function deriveVendorVerificationStatus(row) {
   }
 
   if (!hasMandatoryDetails) {
-    return 'pending';
+    return 'draft';
   }
 
   if (verifiedStatuses.includes(profileStatus) || verifiedStatuses.includes(userVerification) || (userApproved && profileComplete)) {
     return 'verified';
   }
 
-  // Pending should come from an explicit verification submission.
-  // Some user tables default verification_status to "pending" at signup,
-  // which must not lock fresh vendor profiles before KYC submission.
+  // Only return pending when the vendor explicitly submitted for verification
+  // (profile_complete=true). A bare 'pending' in the DB at signup must not
+  // lock fresh vendor profiles before KYC submission.
   if (pendingStatuses.includes(profileStatus) && profileComplete) {
     return 'pending';
   }
@@ -453,7 +470,7 @@ function deriveVendorVerificationStatus(row) {
     return 'pending';
   }
 
-  return 'pending';
+  return 'draft';
 }
 
 async function getVendorContext(vendorId) {

@@ -38,7 +38,7 @@ const firstNonEmpty = (...values) => {
 
 export const normalizeVerificationStatus = (rawStatus) => {
   const raw = String(rawStatus || '').trim().toLowerCase();
-  if (!raw) return STATUS.DRAFT;
+  if (!raw || raw === 'draft') return STATUS.DRAFT;
 
   if (['verified', 'approved', 'completed'].includes(raw)) {
     return STATUS.APPROVED;
@@ -56,7 +56,7 @@ export const toBackendVerificationStatus = (status) => {
   if (status === STATUS.APPROVED) return 'verified';
   if (status === STATUS.REJECTED) return 'rejected';
   if (status === STATUS.PENDING_VERIFICATION) return 'pending';
-  return 'pending';
+  return 'draft';
 };
 
 const normalizeKeyPart = (value) => String(value || '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
@@ -71,12 +71,29 @@ const resolveStorageKey = (vendor) => {
   return null;
 };
 
+const PLACEHOLDER_URL_RE = /https?:\/\/your-public-backend-url\.com/gi;
+const LOCAL_API_BASE = typeof window !== 'undefined'
+  ? `${window.location.protocol}//${window.location.hostname}:5000`
+  : 'http://localhost:5000';
+
+function fixStoredUrls(obj) {
+  if (!obj || typeof obj !== 'object') return obj;
+  if (Array.isArray(obj)) return obj.map(fixStoredUrls);
+  return Object.fromEntries(
+    Object.entries(obj).map(([k, v]) => {
+      if (typeof v === 'string') return [k, v.replace(PLACEHOLDER_URL_RE, LOCAL_API_BASE)];
+      if (v && typeof v === 'object') return [k, fixStoredUrls(v)];
+      return [k, v];
+    })
+  );
+}
+
 export const loadKYC = (vendor) => {
   const scopedKey = resolveStorageKey(vendor);
   if (!scopedKey) return { ...DEFAULT };
   try {
     const raw = localStorage.getItem(scopedKey);
-    if (raw) return { ...DEFAULT, ...JSON.parse(raw) };
+    if (raw) return fixStoredUrls({ ...DEFAULT, ...JSON.parse(raw) });
 
     return { ...DEFAULT };
   } catch {

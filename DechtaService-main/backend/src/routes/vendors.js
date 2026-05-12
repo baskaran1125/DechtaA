@@ -3,7 +3,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const multer = require('multer');
+const { pipeline } = require('stream/promises');
 
 const {
   ensureVendorCompatibilitySchema,
@@ -39,7 +39,6 @@ async function vendorRoutes(fastify, options) {
 
   const vendorUploadDir = path.join(process.cwd(), 'uploads', 'vendor-documents');
   fs.mkdirSync(vendorUploadDir, { recursive: true });
-  const upload = multer({ dest: vendorUploadDir });
 
   // ── Public auth routes (no auth required) ─────────────────
   fastify.post('/auth/send-otp', {
@@ -130,16 +129,24 @@ async function vendorRoutes(fastify, options) {
     protectedFastify.post('/query', { handler: submitVendorQuery });
     protectedFastify.get('/query',  { handler: getVendorQueries });
 
-    protectedFastify.post('/upload-document', { preHandler: upload.single('file') }, async (request, reply) => {
+    protectedFastify.post('/upload-document', async (request, reply) => {
       try {
-        if (!request.file) {
+        const data = await request.file();
+        if (!data) {
           return reply.code(400).send({ success: false, message: 'No file provided' });
         }
+
+        const { v4: uuidv4 } = require('uuid');
+        const ext = path.extname(data.filename || '') || '.bin';
+        const filename = `${uuidv4()}${ext}`;
+        const destPath = path.join(vendorUploadDir, filename);
+
+        await pipeline(data.file, fs.createWriteStream(destPath));
 
         const host = request.headers.host;
         const fallbackBase = `${request.protocol}://${host}`;
         const baseUrl = (process.env.PUBLIC_API_URL || fallbackBase).replace(/\/$/, '');
-        const relativePath = `/uploads/vendor-documents/${request.file.filename}`;
+        const relativePath = `/uploads/vendor-documents/${filename}`;
 
         return reply.send({
           success: true,

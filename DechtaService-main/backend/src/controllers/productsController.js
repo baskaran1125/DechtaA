@@ -18,7 +18,7 @@ const GST_RATES = {
 };
 
 const MAX_PRODUCT_IMAGES = 3;
-const MAX_IMAGE_DATA_URL_LENGTH = 1_500_000;
+const MAX_IMAGE_DATA_URL_LENGTH = 2_800_000; // ~2 MB file after base64 encoding
 
 function sanitizeProductImages(images) {
   if (!images) return null;
@@ -118,7 +118,7 @@ async function getProducts(request, reply) {
     return reply.send({ success: true, products: result.rows });
   } catch (err) {
     request.log.error(err);
-    return reply.code(500).send({ success: false, message: err.message });
+    return reply.code(err.statusCode || 500).send({ success: false, message: err.message });
   }
 }
 
@@ -173,7 +173,7 @@ async function createProduct(request, reply) {
     return reply.code(201).send({ success: true, product: result.rows[0] });
   } catch (err) {
     request.log.error(err);
-    return reply.code(500).send({ success: false, message: err.message });
+    return reply.code(err.statusCode || 500).send({ success: false, message: err.message });
   }
 }
 
@@ -233,7 +233,7 @@ async function updateProduct(request, reply) {
     return reply.send({ success: true, product: result.rows[0] });
   } catch (err) {
     request.log.error(err);
-    return reply.code(500).send({ success: false, message: err.message });
+    return reply.code(err.statusCode || 500).send({ success: false, message: err.message });
   }
 }
 
@@ -253,7 +253,7 @@ async function toggleProductActive(request, reply) {
     return reply.send({ success: true, product: result.rows[0] });
   } catch (err) {
     request.log.error(err);
-    return reply.code(500).send({ success: false, message: err.message });
+    return reply.code(err.statusCode || 500).send({ success: false, message: err.message });
   }
 }
 
@@ -273,7 +273,7 @@ async function boostProduct(request, reply) {
     return reply.send({ success: true, product: result.rows[0] });
   } catch (err) {
     request.log.error(err);
-    return reply.code(500).send({ success: false, message: err.message });
+    return reply.code(err.statusCode || 500).send({ success: false, message: err.message });
   }
 }
 

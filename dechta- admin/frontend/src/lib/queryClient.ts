@@ -48,7 +48,13 @@ export const queryClient = new QueryClient({
       refetchInterval: false,
       refetchOnWindowFocus: false,
       staleTime: Infinity,
-      retry: false,
+      retry: (failureCount, error) => {
+        // Retry up to 2 times for network-level errors (ERR_NETWORK_CHANGED, etc.)
+        // Never retry on HTTP errors (4xx/5xx) since those won't self-resolve
+        const isNetworkError = error instanceof TypeError || !(error instanceof Error && /^\d{3}:/.test(error.message));
+        return isNetworkError && failureCount < 2;
+      },
+      retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 8000),
     },
     mutations: {
       retry: false,

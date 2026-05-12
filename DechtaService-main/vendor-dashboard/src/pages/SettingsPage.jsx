@@ -81,8 +81,8 @@ const SettingsPage = ({ vendor, updateVendor, notify }) => {
     vendor?.user_profile_complete === true ||
     String(vendor?.profileComplete || vendor?.profile_complete || vendor?.user_profile_complete || '').trim().toLowerCase() === 'true' ||
     Number(vendor?.profileComplete || vendor?.profile_complete || vendor?.user_profile_complete || 0) === 1;
-  const pendingLocked = status === STATUS.PENDING_VERIFICATION && (!!kyc?.submittedAt || profileComplete);
-  const disabled = pendingLocked || status === STATUS.APPROVED;
+  const pendingLocked = status === STATUS.PENDING_VERIFICATION;
+  const disabled = status === STATUS.APPROVED;
   const submissionReady = useMemo(() => {
     const p = kyc.profileDetails || {};
     const c = kyc.companyDetails || {};
@@ -312,19 +312,14 @@ const SettingsPage = ({ vendor, updateVendor, notify }) => {
           </button>
           <button
             onClick={handleSubmit}
-            disabled={saving || !submissionReady}
+            disabled={saving || (!submissionReady && status !== STATUS.PENDING_VERIFICATION)}
             className="flex-1 py-3 rounded-xl bg-[#0ceded] hover:opacity-90 text-black text-sm font-bold shadow-lg transition active:scale-95 disabled:opacity-50"
           >
-            {saving ? 'Submitting...' : 'Submit for Verification'}
+            {saving ? 'Submitting...' : pendingLocked ? 'Re-submit for Verification' : 'Submit for Verification'}
           </button>
         </div>
       )}
 
-      {disabled && status === STATUS.PENDING_VERIFICATION && (
-        <div className="text-center text-xs text-gray-400 py-3">
-          Editing is locked while verification is in progress.
-        </div>
-      )}
       {disabled && status === STATUS.APPROVED && (
         <div className="text-center text-xs text-green-500 font-bold py-3">
           Account verified. Contact support to update locked details.

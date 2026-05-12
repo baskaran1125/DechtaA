@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(node --env-file=.env -e ' *)",
+      "Bash(node --env-file=.env _run_grants.js)",
+      "Bash(node -e ' *)",
+      "Bash(timeout 12 tail -f \"C:\\\\Users\\\\acer\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-acer-OneDrive-Desktop-DechtaA\\\\0ed271f3-1f6b-458f-a470-55493c417590\\\\tasks\\\\baez7rduo.output\")",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\acer\\\\OneDrive\\\\Desktop\\\\DechtaA\" -Recurse -Directory -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object -ExpandProperty FullName)"
+    ]
+  }
+}

@@ -156,7 +156,34 @@ async function ensureAdminOnboardingCompatibilitySchema() {
     }
     if (await tableExistsInPublic('vendor_profiles')) {
         await pool.query(`ALTER TABLE vendor_profiles ALTER COLUMN user_id DROP NOT NULL`).catch(() => ({ rows: [] }));
+        await pool.query(`ALTER TABLE vendor_profiles ADD COLUMN IF NOT EXISTS business_address TEXT`).catch(() => ({ rows: [] }));
+        await pool.query(`ALTER TABLE vendor_profiles ADD COLUMN IF NOT EXISTS business_latitude NUMERIC(10,8)`).catch(() => ({ rows: [] }));
+        await pool.query(`ALTER TABLE vendor_profiles ADD COLUMN IF NOT EXISTS business_longitude NUMERIC(11,8)`).catch(() => ({ rows: [] }));
+        await pool.query(`ALTER TABLE vendor_profiles ADD COLUMN IF NOT EXISTS whatsapp_number VARCHAR(20)`).catch(() => ({ rows: [] }));
+        await pool.query(`ALTER TABLE vendor_profiles ADD COLUMN IF NOT EXISTS google_maps_location TEXT`).catch(() => ({ rows: [] }));
+        await pool.query(`ALTER TABLE vendor_profiles ADD COLUMN IF NOT EXISTS business_type VARCHAR(100)`).catch(() => ({ rows: [] }));
+        await pool.query(`ALTER TABLE vendor_profiles ADD COLUMN IF NOT EXISTS years_of_experience NUMERIC(4,1)`).catch(() => ({ rows: [] }));
+        await pool.query(`ALTER TABLE vendor_profiles ADD COLUMN IF NOT EXISTS location_label TEXT`).catch(() => ({ rows: [] }));
+        await pool.query(`ALTER TABLE vendor_profiles ADD COLUMN IF NOT EXISTS rejection_reason TEXT`).catch(() => ({ rows: [] }));
+        await pool.query(`ALTER TABLE vendor_profiles ADD COLUMN IF NOT EXISTS verification_status VARCHAR(50) DEFAULT 'pending'`).catch(() => ({ rows: [] }));
     }
+    if (await tableExistsInPublic('users')) {
+        await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS profile_complete BOOLEAN DEFAULT FALSE`).catch(() => ({ rows: [] }));
+    }
+    await pool.query(`
+        CREATE TABLE IF NOT EXISTS vehicle_pricing (
+            id          SERIAL PRIMARY KEY,
+            vehicle_type TEXT NOT NULL,
+            display_name TEXT NOT NULL,
+            base_fare    NUMERIC NOT NULL,
+            rate_per_km  NUMERIC NOT NULL,
+            min_km       NUMERIC DEFAULT 0,
+            is_active    BOOLEAN DEFAULT TRUE,
+            created_at   TIMESTAMPTZ DEFAULT NOW(),
+            updated_at   TIMESTAMPTZ DEFAULT NOW(),
+            CONSTRAINT vehicle_pricing_vehicle_type_unique UNIQUE (vehicle_type)
+        )
+    `).catch(() => {});
     if (await tableExistsInPublic('driver_profiles')) {
         await pool.query(`ALTER TABLE driver_profiles ADD COLUMN IF NOT EXISTS mobile_number VARCHAR(20)`).catch(() => ({ rows: [] }));
         await pool.query(`ALTER TABLE driver_profiles ADD COLUMN IF NOT EXISTS phone_number VARCHAR(20)`).catch(() => ({ rows: [] }));
@@ -224,7 +251,11 @@ function deriveVendorVerificationStatus(row) {
     const userStatus = normalizeStatusToken(row?.user_status || row?.userStatus);
     const vendorStatus = normalizeStatusToken(row?.vendor_status || row?.vendorStatus || row?.status);
     const userApproved = row?.user_is_approved === true || row?.user_is_approved === 1 || row?.is_approved === true;
-    const rejectedSet = new Set(["rejected", "suspended", "banned", "inactive"]);
+    const profileComplete =
+        row?.user_profile_complete === true ||
+        row?.user_profile_complete === 1 ||
+        String(row?.user_profile_complete || "").toLowerCase() === "true";
+    const rejectedSet = new Set(["rejected", "suspended", "banned"]);
     if (profileStatus === "rejected" ||
         userVerification === "rejected" ||
         rejectedSet.has(userStatus) ||
@@ -238,15 +269,27 @@ function deriveVendorVerificationStatus(row) {
         userApproved) {
         return "verified";
     }
+    const pendingStatuses = new Set(["pending", "pending_verification", "submitted", "under_review"]);
+    if (pendingStatuses.has(profileStatus) ||
+        (pendingStatuses.has(userVerification) && profileComplete)) {
+        return "pending";
+    }
     return "pending";
 }
 export class DatabaseStorage {
+    async _getTableColumns(tableName) {
+        const result = await pool.query(
+            `SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name = $1`,
+            [tableName]
+        ).catch(() => ({ rows: [] }));
+        return new Set((result.rows || []).map(r => r.column_name));
+    }
     mapVendorProfileRow(vp, productCount = 0, email = "") {
         const verificationStatus = deriveVendorVerificationStatus(vp);
         const resolvedEmail = email || vp.user_email || vp.vendor_email || "";
         const resolvedPhone = vp.vendor_phone || vp.mobile || vp.phone || vp.phone_number || vp.user_phone || "";
         const resolvedName = vp.shop_name || vp.business_name || `Vendor #${vp.id}`;
-        const resolvedOwner = vp.vendor_owner_name || vp.owner_name || null;
+        const resolvedOwner = vp.vendor_owner_name || vp.vp_owner_name || vp.owner_name || null;
         const resolvedAddress = vp.shop_address || vp.business_address || null;
         const resolvedYears = vp.years_of_experience ?? vp.years_of_business_experience ?? null;
         const resolvedLatitude = toFiniteNumber(vp.shop_latitude) ??
@@ -1815,87 +1858,140 @@ export class DatabaseStorage {
         try {
             await ensureAdminOnboardingCompatibilitySchema();
             const hasVendorProfiles = await tableExistsInPublic('vendor_profiles');
-            const hasVendors = await tableExistsInPublic('vendors');
-            if (!hasVendorProfiles && !hasVendors) {
-                return [];
+            const hasVendors        = await tableExistsInPublic('vendors');
+            const hasUsers          = await tableExistsInPublic('users');
+
+            if (!hasVendorProfiles && !hasVendors) return [];
+
+            if (hasVendorProfiles) {
+                // Discover actual columns at runtime — ALTER TABLE silently fails on GCP
+                // when appuser doesn't own the table, so we cannot assume any extra column exists.
+                const [vpColSet, uColSet] = await Promise.all([
+                    this._getTableColumns('vendor_profiles'),
+                    hasUsers ? this._getTableColumns('users') : Promise.resolve(new Set()),
+                ]);
+
+                const vpCol = (col, alias, type = 'text') =>
+                    vpColSet.has(col) ? `vp.${col}${alias ? ` AS ${alias}` : ''}` : `NULL::${type} AS ${alias || col}`;
+                const uCol = (col, alias, type = 'text') =>
+                    uColSet.has(col) ? `u.${col}${alias ? ` AS ${alias}` : ''}` : `NULL::${type} AS ${alias || col}`;
+
+                // Phone: some DBs have phone_number, others have phone
+                const uPhone = uColSet.has('phone_number')
+                    ? (uColSet.has('phone') ? `COALESCE(u.phone_number, u.phone)` : `u.phone_number`)
+                    : (uColSet.has('phone') ? `u.phone` : `NULL::text`);
+
+                const uJoin = hasUsers ? `LEFT JOIN users u ON u.id = vp.user_id` : '';
+
+                const query = `
+                    SELECT
+                        vp.id,
+                        ${vpCol('user_id',             'user_id',             'bigint')},
+                        ${vpCol('business_name',        'business_name')},
+                        ${vpCol('owner_name',           'vp_owner_name')},
+                        ${vpCol('verification_status',  'verification_status')},
+                        ${vpCol('created_at',           'created_at',           'timestamptz')},
+                        ${vpCol('updated_at',           'updated_at',           'timestamptz')},
+                        ${vpCol('rejection_reason',     'rejection_reason')},
+                        ${vpCol('business_address',     'business_address')},
+                        ${vpCol('business_latitude',    'business_latitude',    'numeric')},
+                        ${vpCol('business_longitude',   'business_longitude',   'numeric')},
+                        ${vpCol('whatsapp_number',      'whatsapp_number')},
+                        ${vpCol('google_maps_location', 'google_maps_location')},
+                        ${vpCol('business_type',        'business_type')},
+                        ${vpCol('years_of_experience',  'years_of_experience',  'numeric')},
+                        ${vpCol('location_label',       'location_label')},
+                        ${hasUsers ? `
+                        ${uCol('email',              'user_email')},
+                        ${uPhone}                    AS user_phone,
+                        ${uCol('is_approved',        'user_is_approved',     'boolean')},
+                        ${uCol('status',             'user_status')},
+                        ${uCol('verification_status','user_verification_status')},
+                        ${uCol('profile_complete',   'user_profile_complete','boolean')},
+                        ${uCol('rejection_reason',   'user_rejection_reason')}` : `
+                        NULL::text    AS user_email,
+                        NULL::text    AS user_phone,
+                        NULL::boolean AS user_is_approved,
+                        NULL::text    AS user_status,
+                        NULL::text    AS user_verification_status,
+                        NULL::boolean AS user_profile_complete,
+                        NULL::text    AS user_rejection_reason`}
+                    FROM vendor_profiles vp
+                    ${uJoin}
+                    WHERE LOWER(COALESCE(vp.verification_status, 'pending')) NOT IN ('verified', 'approved', 'rejected')
+                    ORDER BY vp.created_at DESC NULLS LAST, vp.id DESC
+                `;
+
+                const [vendorsRes, countsRes] = await Promise.all([
+                    pool.query(query),
+                    pool.query(`SELECT vendor_id, COUNT(*)::int AS total_products FROM products GROUP BY vendor_id`).catch(() => ({ rows: [] })),
+                ]);
+
+                const countMap = new Map();
+                for (const row of countsRes.rows) {
+                    countMap.set(Number(row.vendor_id), Number(row.total_products || 0));
+                }
+
+                return vendorsRes.rows
+                    .map((vp) => this.mapVendorProfileRow(vp, countMap.get(Number(vp.id)) || 0))
+                    .filter((v) => v.verificationStatus === 'pending');
             }
+
+            // Fallback: only the admin vendors table exists
+            const vColSet = await this._getTableColumns('vendors');
+            const vCol = (col, alias, type = 'text') =>
+                vColSet.has(col) ? `v.${col}${alias ? ` AS ${alias}` : ''}` : `NULL::${type} AS ${alias || col}`;
+
+            const fallbackQuery = `
+                SELECT
+                    v.id,
+                    ${vCol('shop_name',      'shop_name')},
+                    ${vCol('owner_name',     'vendor_owner_name')},
+                    ${vCol('phone',          'vendor_phone')},
+                    ${vCol('email',          'vendor_email')},
+                    ${vCol('status',         'vendor_status')},
+                    ${vCol('shop_address',   'shop_address')},
+                    ${vCol('shop_latitude',  'shop_latitude',  'numeric')},
+                    ${vCol('shop_longitude', 'shop_longitude', 'numeric')},
+                    ${vCol('location_label', 'location_label')},
+                    ${vCol('created_at',     'created_at',     'timestamptz')},
+                    NULL::bigint  AS user_id,
+                    NULL::text    AS verification_status,
+                    NULL::text    AS rejection_reason,
+                    NULL::text    AS business_name,
+                    NULL::text    AS vp_owner_name,
+                    NULL::text    AS business_address,
+                    NULL::numeric AS business_latitude,
+                    NULL::numeric AS business_longitude,
+                    NULL::text    AS whatsapp_number,
+                    NULL::text    AS google_maps_location,
+                    NULL::text    AS business_type,
+                    NULL::numeric AS years_of_experience,
+                    NULL::text    AS user_email,
+                    NULL::text    AS user_phone,
+                    NULL::boolean AS user_is_approved,
+                    NULL::text    AS user_status,
+                    NULL::text    AS user_verification_status,
+                    NULL::boolean AS user_profile_complete,
+                    NULL::text    AS user_rejection_reason
+                FROM vendors v
+                ORDER BY ${vColSet.has('created_at') ? 'v.created_at DESC NULLS LAST,' : ''} v.id DESC
+            `;
+
             const [vendorsRes, countsRes] = await Promise.all([
-                hasVendorProfiles ? pool.query(`
-          SELECT
-            vp.*,
-            vp.user_id,
-            u.email AS user_email,
-            u.phone_number AS user_phone,
-            u.is_approved AS user_is_approved,
-            u.status AS user_status,
-            u.verification_status AS user_verification_status,
-            u.rejection_reason AS user_rejection_reason,
-            ${hasVendors ? `
-            v.shop_name,
-            v.owner_name AS vendor_owner_name,
-            v.phone AS vendor_phone,
-            v.email AS vendor_email,
-            v.status AS vendor_status,
-            v.shop_address,
-            v.shop_latitude,
-            v.shop_longitude,
-            v.location_label,
-            v.location_updated_at,
-            v.gst_number AS vendor_gst_number` : `
-            NULL::text AS shop_name,
-            NULL::text AS vendor_owner_name,
-            NULL::text AS vendor_phone,
-            NULL::text AS vendor_email,
-            NULL::text AS vendor_status,
-            NULL::text AS shop_address,
-            NULL::numeric AS shop_latitude,
-            NULL::numeric AS shop_longitude,
-            NULL::text AS location_label,
-            NULL::timestamptz AS location_updated_at,
-            NULL::text AS vendor_gst_number`}
-          FROM vendor_profiles vp
-          LEFT JOIN users u ON u.id = vp.user_id
-          ${hasVendors ? `LEFT JOIN vendors v ON v.id = vp.id` : ``}
-          ORDER BY vp.created_at DESC NULLS LAST, vp.id DESC
-        `) : pool.query(`
-          SELECT
-            v.id,
-            NULL::bigint AS user_id,
-            NULL::text AS user_email,
-            NULL::text AS user_phone,
-            NULL::boolean AS user_is_approved,
-            NULL::text AS user_status,
-            NULL::text AS user_verification_status,
-            NULL::text AS user_rejection_reason,
-            v.shop_name,
-            v.owner_name AS vendor_owner_name,
-            v.phone AS vendor_phone,
-            v.email AS vendor_email,
-            v.status AS vendor_status,
-            v.shop_address,
-            v.shop_latitude,
-            v.shop_longitude,
-            v.location_label,
-            v.location_updated_at,
-            v.gst_number AS vendor_gst_number,
-            v.created_at,
-            NULL::text AS verification_status,
-            NULL::text AS rejection_reason,
-            v.gst_number
-          FROM vendors v
-          ORDER BY v.created_at DESC NULLS LAST, v.id DESC
-        `),
+                pool.query(fallbackQuery),
                 pool.query(`SELECT vendor_id, COUNT(*)::int AS total_products FROM products GROUP BY vendor_id`).catch(() => ({ rows: [] })),
             ]);
+
             const countMap = new Map();
             for (const row of countsRes.rows) {
                 countMap.set(Number(row.vendor_id), Number(row.total_products || 0));
             }
-            return vendorsRes.rows
-                .map((vp) => this.mapVendorProfileRow(vp, countMap.get(Number(vp.id)) || 0))
-                .filter((v) => (v.verificationStatus || "pending") === "pending");
+
+            return vendorsRes.rows.map((vp) => this.mapVendorProfileRow(vp, countMap.get(Number(vp.id)) || 0));
         }
-        catch (_error) {
+        catch (error) {
+            console.error('getPendingVendors error:', error?.message || error);
             return [];
         }
     }
@@ -2927,26 +3023,66 @@ export class DatabaseStorage {
     // ═══════════════════════════════════════════════
     // VEHICLE PRICING
     // ═══════════════════════════════════════════════
+    _mapVehiclePricingRow(row) {
+        if (!row) return null;
+        return {
+            id:          Number(row.id),
+            vehicleType: row.vehicle_type,
+            displayName: row.display_name,
+            baseFare:    row.base_fare,
+            ratePerKm:   row.rate_per_km,
+            minKm:       row.min_km ?? '0',
+            isActive:    row.is_active,
+            createdAt:   row.created_at,
+            updatedAt:   row.updated_at,
+        };
+    }
     async getVehiclePricing() {
-        return await db.select().from(vehiclePricing).orderBy(asc(vehiclePricing.id));
+        const { rows } = await pool.query(`SELECT * FROM vehicle_pricing ORDER BY id ASC`);
+        return rows.map(r => this._mapVehiclePricingRow(r));
     }
     async getVehiclePricingByType(vehicleType) {
-        const [pricing] = await db.select().from(vehiclePricing).where(eq(vehiclePricing.vehicleType, vehicleType));
-        return pricing;
+        const { rows } = await pool.query(
+            `SELECT * FROM vehicle_pricing WHERE vehicle_type = $1 LIMIT 1`,
+            [vehicleType]
+        );
+        return rows[0] ? this._mapVehiclePricingRow(rows[0]) : null;
     }
     async createVehiclePricing(pricing) {
-        const [created] = await db.insert(vehiclePricing).values(pricing).returning();
-        return created;
+        const { rows } = await pool.query(
+            `INSERT INTO vehicle_pricing (vehicle_type, display_name, base_fare, rate_per_km, min_km, is_active)
+             VALUES ($1, $2, $3, $4, $5, TRUE)
+             RETURNING *`,
+            [
+                pricing.vehicleType,
+                pricing.displayName,
+                pricing.baseFare,
+                pricing.ratePerKm,
+                pricing.minKm ?? '0',
+            ]
+        );
+        return this._mapVehiclePricingRow(rows[0]);
     }
     async updateVehiclePricing(id, data) {
-        const [updated] = await db.update(vehiclePricing)
-            .set({ ...data, updatedAt: new Date() })
-            .where(eq(vehiclePricing.id, id))
-            .returning();
-        return updated;
+        const fields = [];
+        const values = [];
+        let i = 1;
+        if (data.vehicleType  !== undefined) { fields.push(`vehicle_type  = $${i++}`); values.push(data.vehicleType);  }
+        if (data.displayName  !== undefined) { fields.push(`display_name  = $${i++}`); values.push(data.displayName);  }
+        if (data.baseFare     !== undefined) { fields.push(`base_fare     = $${i++}`); values.push(data.baseFare);     }
+        if (data.ratePerKm    !== undefined) { fields.push(`rate_per_km   = $${i++}`); values.push(data.ratePerKm);    }
+        if (data.minKm        !== undefined) { fields.push(`min_km        = $${i++}`); values.push(data.minKm);        }
+        if (data.isActive     !== undefined) { fields.push(`is_active     = $${i++}`); values.push(data.isActive);     }
+        fields.push(`updated_at = NOW()`);
+        values.push(id);
+        const { rows } = await pool.query(
+            `UPDATE vehicle_pricing SET ${fields.join(', ')} WHERE id = $${i} RETURNING *`,
+            values
+        );
+        return this._mapVehiclePricingRow(rows[0]);
     }
     async deleteVehiclePricing(id) {
-        await db.update(vehiclePricing).set({ isActive: false }).where(eq(vehiclePricing.id, id));
+        await pool.query(`UPDATE vehicle_pricing SET is_active = FALSE WHERE id = $1`, [id]);
     }
     // ═══════════════════════════════════════════════
     // MANPOWER PRICING

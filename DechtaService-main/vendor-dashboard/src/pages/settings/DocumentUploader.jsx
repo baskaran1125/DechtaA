@@ -29,11 +29,17 @@ export const DocumentUploader = ({
       r.readAsDataURL(file);
     });
 
+  const fixUrl = (url) => {
+    if (!url || typeof url !== 'string') return url;
+    const localBase = `${window.location.protocol}//${window.location.hostname}:5000`;
+    return url.replace(/https?:\/\/your-public-backend-url\.com/gi, localBase);
+  };
+
   const uploadAndResolve = async (file) => {
     try {
       const res = await uploadVendorDocument(file);
       const url = res?.data?.url || res?.data?.path;
-      if (url) return url;
+      if (url) return fixUrl(url);
     } catch {
       // fall back to base64 if upload endpoint is unavailable
     }
